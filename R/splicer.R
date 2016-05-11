@@ -11,7 +11,7 @@
 #' @return A list of data.tables or a single data.table that is
 #' the result of a provided data.table being split/subsetted
 #' @export
-#' @examples "examples/example-splice.R"
+#' @example /examples/example-splice.R
 splice <- function(DT=NULL, ..., apply=NULL){
     # Save call to extract subset conditions. Remove the fn from call obj.
     slice <- sys.call()

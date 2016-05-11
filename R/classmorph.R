@@ -9,14 +9,16 @@
 #' @param cols An optional character vector of column names to operate on.
 #'      Not applicable for function ClassMorph.
 #' @param copy A boolean value indicating whether to alter \code{dt} in memory or 
-#'      whether to return a \italics{new (copy)} of the input data.table.
+#'      whether to return a \emph{new (copy)} of the input data.table.
 #' @param force A boolean indicating whether to force conversion from class factor
 #'      to class numeric despite NAs being generated.
 #' @return Returns value is a data.table that is either a copy of the input dt that 
 #'      has been modified, or the same input dt that has been modified in memory
+#'  
 #' @export
-#'
-#' @examples "examples/example-classmorph.R"
+#' @describeIn ClassMorph
+#' @example /examples/example-classmorph.R
+
 ClassMorph <- function(dt,
                        old   = c("factor","integer","character","numeric"),
                        new   = c("factor","integer","character","numeric"),
