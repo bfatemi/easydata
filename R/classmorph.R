@@ -1,38 +1,42 @@
 
-NumMorph <- function(dt, cols=NULL, copy=FALSE){
-    checkdt(dt, cols)
-
-    if(copy)
-        dt <- copy(dt)
-    
-    if(is.null(cols))
-        cols <- names(dt)
-    
-    # recursive function to catch warning if value generated error, and skip the column
-    f <- function(i){
-        if(!is.na(cols[i])){
-            tryCatch({
-                set(dt, j=cols[i], value = as.numeric(dt[, get(cols[i])]))
-                f(i + 1)
-            }, warning = function(e){
-                warning(paste0("Conversion generated NA. Skipping column: ", cols[i]))
-                f(i + 1)
-            })
-        }
-    }
-    f(1)
-    return(dt)
-}
-
+#' Functions to Change Column Classes
+#'
+#' @param dt A data.table with greater than 0 rows to operate on.
+#' @param old ClassMorph only. A column type, specified as a character value, to detect
+#'      and convert to the class specified by 'new'
+#' @param new ClassMorph only. A column type, specified as a character value, to 
+#'      convert all columns of the class specified by 'old' to. 
+#' @param cols An optional character vector of column names to operate on.
+#'      Not applicable for function ClassMorph.
+#' @param copy A boolean value indicating whether to alter \code{dt} in memory or 
+#'      whether to return a \italics{new (copy)} of the input data.table.
+#' @param force A boolean indicating whether to force conversion from class factor
+#'      to class numeric despite NAs being generated.
+#' @return Returns value is a data.table that is either a copy of the input dt that 
+#'      has been modified, or the same input dt that has been modified in memory
+#' @export
+#'
+#' @examples
 ClassMorph <- function(dt,
-                   old = c("factor","integer","character","numeric"),
-                   new = c("factor","integer","character","numeric"),
-                   copy = FALSE){
+                       old   = c("factor","integer","character","numeric"),
+                       new   = c("factor","integer","character","numeric"),
+                       copy  = FALSE,
+                       force = FALSE){
+    
+    # NEED TO IMPLEMENT force
+    # trace how NAs are/could be generated and return error. recommend to 
+    # rerun with force=TRUE
+    
+    # ERROR WITH FACTOR TO INTEGER. NO CONVERSION TO CHARACTER FIRST
+    
     # Capture args
     old <- match.arg(old)
     new <- match.arg(new)
     
     checkdt(dt)
+    
+    # Save original column order. Set at end
+    colorder <- copy(colnames(dt))
     
     if(copy)
         dt <- copy(dt)
@@ -70,6 +74,39 @@ ClassMorph <- function(dt,
         set(dt, j = k, value = NULL)
         setnames(dt, newk, k)
     }
+    
+    # reset column orders
+    setcolorder(dt, colorder)
+    
     return(dt)
 }
+
+#' @export
+#'
+NumMorph <- function(dt, cols=NULL, copy=FALSE){
+    checkdt(dt, cols)
+
+    if(copy)
+        dt <- copy(dt)
+    
+    if(is.null(cols))
+        cols <- names(dt)
+    
+    # recursive function to catch warning if value generated error, and skip the column
+    f <- function(i){
+        if(!is.na(cols[i])){
+            tryCatch({
+                set(dt, j=cols[i], value = as.numeric(dt[, get(cols[i])]))
+                f(i + 1)
+            }, warning = function(e){
+                warning(paste0("Conversion generated NA. Skipping column: ", cols[i]))
+                f(i + 1)
+            })
+        }
+    }
+    f(1)
+    return(dt)
+}
+
+
 

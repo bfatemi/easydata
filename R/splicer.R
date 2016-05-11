@@ -10,7 +10,6 @@
 #' a column, after any splitting and subsetting is performed. See examples below.
 #' @return A list of data.tables or a single data.table that is
 #' the result of a provided data.table being split/subsetted
-#' @examples
 #' @export
 #' 
 splice <- function(DT=NULL, ..., apply=NULL){

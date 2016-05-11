@@ -1,3 +1,5 @@
+#' @examples
+#' 
 # Create example data
 dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
                  ColB = c("a", "b", "b", "c", "c", "c", "d", "e", "f"),
@@ -22,7 +24,7 @@ splice(DT = dt, ColB = "c" & "b", ColA < 5)
 splice(DT = dt, ColB = "c" & "b", ColA = 1:4)
 
 
-# For convenience, we provide the ability to apply a function to a column after 
+# For convenience, we provide the ability to apply a function to a column after
 # slicing the data
 
 
