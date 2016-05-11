@@ -1,7 +1,7 @@
-#' Subset & Split Data
+#' Slice Data
 #'
 #' \code{splice} is a function that efficiently splits and subsets a data.table (DT) and
-#' returns a single new DT (if no splitting) or multiple DTs within a list.
+#' returns a list with one new DT (if no splitting) or multiple DTs
 #'
 #' @param DT A data.table to split and/or subset
 #' @param ... values or logical operators for a given column(s) that are used to
@@ -11,56 +11,14 @@
 #' @return A list of data.tables or a single data.table that is
 #' the result of a provided data.table being split/subsetted
 #' @examples
-#' #
-#' # Create example data
-#' #
-#' dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
-#'                  ColB = c("a", "b", "b", "c", "c", "c", "d", "e", "f"),
-#'                  ColC = rnorm(9))
-#'
-#'
-#' # Use "&" to specify a "split"
-#' #
-#' # EX: Split dt by two values from ColB
-#'
-#' splice(DT = dt, ColB = "c" & "b")
-#'
-#'
-#' # Splitting always takes priority. Logical operators like "|" (or), "<", etc. are performed after any splitting
-#' #
-#' # EX: Split ColB by two values, and restrict ColA to 3 values
-#'
-#' splice(DT = dt, ColB = "c" & "b", ColA = 1 | 2 | 3 | 4)
-#'
-#'
-#' # The above line is equivalent to the following two:
-#' splice(DT = dt, ColB = "c" & "b", ColA < 5)
-#' splice(DT = dt, ColB = "c" & "b", ColA = 1:4)
-#'
-#'
-#' # For convenience, we provide the ability to apply a function to a column after slicing the data:
-#' #
-#' # EX: mean of ColC after grouping ColB by two values and subsetting ColA
-#'
-#' splice(DT = dt, ColA = "b" & "c", ColA < 5, apply = mean(ColC))
-#'
-#'
-#' # No splitting required
-#' #
-#' # EX: Subset for ColA < 5 and two values of ColB
-#'
-#' splice(DT = dt, ColA < 5, ColB = c("b","c"))
 #' @export
-#'
-
-
+#' 
 splice <- function(DT=NULL, ..., apply=NULL){
     # Save call to extract subset conditions. Remove the fn from call obj.
     slice <- sys.call()
     slice <- slice[-1]
 
     # Define helper function to recursive extract 'AND' or 'OR' values
-    #
     RecurseGet <- function(a){
         values <- a[[length(a)]] # extract
         newa <- a[-length(a)]    # remove
@@ -88,6 +46,7 @@ splice <- function(DT=NULL, ..., apply=NULL){
     #----------------------------------------------------
     # Extract args: Get the function call if provided
     #----------------------------------------------------
+    
     fInd <- which(names(slice) == "apply")
 
     # if apply arg is provided, extract and store the call to
@@ -109,11 +68,8 @@ splice <- function(DT=NULL, ..., apply=NULL){
     names(slice)[is.null(names(slice))] <- "NONAME"
     oInd <- which(names(slice) == "NONAME" | names(slice) == "")
 
-
-    #oInd <- names(slice)
     # operators are optional but declare null to prevent error
     # when binding together
-    #
     logOp <- c()
     if(!!length(oInd)){
         logOp  <- slice[oInd]
@@ -195,7 +151,6 @@ splice <- function(DT=NULL, ..., apply=NULL){
     #DT <- eval(nDT)
 
     # Helper function to subset DT for each AND
-    #
     f <- function(and){
         AndBool <- 1 # default to 1 to enable no 'and' condition
 
