@@ -45,7 +45,6 @@
 #'       cols = c("A", "B"))
 #' @export
 
-
 xSwap <- function(x=NULL, find=NA, swap=NULL, cols=NULL, force=FALSE, copy=FALSE){
 
     if(is.null(x))

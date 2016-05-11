@@ -6,9 +6,7 @@
 #' @param tz A character value indicating the timezone. Options are: "current", "utc", and "gmt"
 #' @return A list of data.tables or a single data.table that is
 #' the result of a provided data.table being split/subsetted
-#' @examples
 #' @export
-
 DateMorph <- function(dt, format=NULL, tz=c("current","utc","gmt"), cols=NULL, copy=FALSE){
     tz <- match.arg(type)
     switch(tz,
