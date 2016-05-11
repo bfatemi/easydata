@@ -16,7 +16,7 @@
 #'      has been modified, or the same input dt that has been modified in memory
 #' @export
 #'
-#' @examples
+#' @examples "examples/example-classmorph.R"
 ClassMorph <- function(dt,
                        old   = c("factor","integer","character","numeric"),
                        new   = c("factor","integer","character","numeric"),
@@ -81,8 +81,8 @@ ClassMorph <- function(dt,
     return(dt)
 }
 
+#' @describeIn ClassMorph
 #' @export
-#'
 NumMorph <- function(dt, cols=NULL, copy=FALSE){
     checkdt(dt, cols)
 
