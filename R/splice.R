@@ -1,17 +1,18 @@
-#' Slice Data
+#' Splice Data
 #'
 #' \code{splice} is a function that efficiently splits and subsets a data.table (DT) and
-#' returns a list with one new DT (if no splitting) or multiple DTs
+#' returns a list with one or more data.table objects
 #'
 #' @param DT A data.table to split and/or subset
 #' @param ... values or logical operators for a given column(s) that are used to
-#' subset or split the data. See examples below.
+#'      subset or split the data. See examples below.
 #' @param apply An R expression to apply to the data, typically a function to run on
-#' a column, after any splitting and subsetting is performed. See examples below.
-#' @return A list of data.tables or a single data.table that is
-#' the result of a provided data.table being split/subsetted
-#' @export
+#'      a column, after any splitting and subsetting is performed. See examples below.
+#' @return A list with one or more elements that are data.tables resulting from 
+#'      DT being split/subsetted
+#' @family quick wranglers
 #' @example /examples/example-splice.R
+#' @export
 splice <- function(DT=NULL, ..., apply=NULL){
     # Save call to extract subset conditions. Remove the fn from call obj.
     slice <- sys.call()

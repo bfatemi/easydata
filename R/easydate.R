@@ -1,21 +1,35 @@
-#' \code{MorphToDate} is a convenience wrapper around  that efficiently splits and subsets a data.table (DT) and
-#' returns a single new DT (if no splitting) or multiple DTs within a list.
+#' Functions to Change Column Classes
 #'
-#' @param DT A data.table to morph column classes
-#' @param format For \code{DateMorph} only. Format of the value to convert to date. See examples for acceptable formats.
+#' The functions \code{\link{ClassMorph}}, and \code{\link{NumMorph}}, in addition to \code{DateMorph},
+#' are functions designed to make dealing with column classes easy. See examples for how
+#' to avoid uncessary frustrations related to unexpected column classes or date formats.
+#'
+#' @param dt A data.table to morph column classes
+#' @param format Format of the value to convert to date. See examples for acceptable formats.
 #' @param tz A character value indicating the timezone. Options are: "current", "utc", and "gmt"
-#' @return A list of data.tables or a single data.table that is
-#' the result of a provided data.table being split/subsetted
+#' @family class handler
+#' @example /examples/example-classmorph.R
 #' @export
-DateMorph <- function(dt, format=NULL, tz=c("current","utc","gmt"), cols=NULL, copy=FALSE){
-    tz <- match.arg(type)
+DateMorph <- function(dt, cols=NULL, format=NULL, tz=c("current","utc","gmt"), copy=FALSE){
+    if(missing(tz))
+        tz <- "current"
+    else
+        tz <- match.arg(type)
+    
     switch(tz,
            current = "",
            utc = "UTC",
            gmt = "GMT")
     
-    # no return. checks conditions of data.table (nrows>1, is data.table, cols exist)
+    # cols is not optional here (for now)
+    if(is.null(cols))
+        stop("Provide column name(s) for conversion to date class", call. = F)
+    
+    # perform general checks on dt
     checkdt(dt, cols)
+    
+    if(copy)
+        dt <- copy(dt)
     
     if(missing(format))
         format = "%Y-%mm-%dd"

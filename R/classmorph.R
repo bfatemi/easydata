@@ -1,7 +1,15 @@
-
 #' Functions to Change Column Classes
 #'
-#' @param dt A data.table with greater than 0 rows to operate on.
+#' The functions \code{ClassMorph}, and \code{NumMorph}, in addition to \code{\link{DateMorph}},
+#' are functions designed to make dealing with column classes easy. See examples for how
+#' to avoid uncessary frustrations related to unexpected column classes or date formats.
+#' 
+#' This function takes care of multiple conversion steps that are sometimes needed to avoid 
+#' data loss or unexpected results (e.g. a factor that "looks" like the number "1" may 
+#' not convert to a \code{numeric} "1". To get around this common frustration, this function
+#' will perform an indirect conversion to \code{character} before converting to \code{numeric})
+#' 
+#' @param dt A data.table to morph column classes
 #' @param old ClassMorph only. A column type, specified as a character value, to detect
 #'      and convert to the class specified by 'new'
 #' @param new ClassMorph only. A column type, specified as a character value, to 
@@ -12,13 +20,14 @@
 #'      whether to return a \emph{new (copy)} of the input data.table.
 #' @param force A boolean indicating whether to force conversion from class factor
 #'      to class numeric despite NAs being generated.
-#' @return Returns value is a data.table that is either a copy of the input dt that 
+#' @return Returns a data.table that is either a copy of the input dt that 
 #'      has been modified, or the same input dt that has been modified in memory
-#'  
-#' @export
-#' @describeIn ClassMorph
+#' @family class handler
 #' @example /examples/example-classmorph.R
-
+#' @export
+#' @describeIn ClassMorph A function to convert all columns of class "old" to class "new". This
+#' function handles the indirect conversions sometimes needed to avoid data loss or
+#' unexpected results (see details).
 ClassMorph <- function(dt,
                        old   = c("factor","integer","character","numeric"),
                        new   = c("factor","integer","character","numeric"),
@@ -83,7 +92,8 @@ ClassMorph <- function(dt,
     return(dt)
 }
 
-#' @describeIn ClassMorph
+#' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
+#'      dt, where a conversion to numeric would not generate NA values. 
 #' @export
 NumMorph <- function(dt, cols=NULL, copy=FALSE){
     checkdt(dt, cols)

@@ -1,4 +1,4 @@
-#' A helper function to perform common data.table checks
+#' Internal Helper Functions
 #' 
 #' @description \code{checkdt} is intended for developers who write functions that 
 #'      accept a \code{data.table} as an input. \code{checkdt} performs common checks 
