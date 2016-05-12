@@ -7,5 +7,7 @@ Description: This package provides a set of functions built on top of data.table
     is a simplified interface between the data analyst who may not be familiar with R, 
     and operations on data using data.tables.
 Depends: R (>= 3.2.2)
+Imports:
+    data.table
 License: MIT
 LazyData: true
