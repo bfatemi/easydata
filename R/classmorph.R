@@ -29,7 +29,7 @@
 #' function handles the indirect conversions sometimes needed to avoid data loss or
 #' unexpected results (see details).
 ClassMorph <- function(dt,
-                       old   = c("factor","integer","character","numeric"),
+                       old   = c("factor","integer","character","numeric","logical"),
                        new   = c("factor","integer","character","numeric"),
                        copy  = FALSE,
                        force = FALSE){
@@ -56,7 +56,7 @@ ClassMorph <- function(dt,
     # E.g.  direct:   factor -> numeric
     #       indirect: factor -> character -> numeric
     #
-    types <- c("factor","integer","character","numeric")
+    types <- c("factor","integer","character","numeric","logical")
     
     dtTypes <- CJ(From = types, To = types)
     setkey(dtTypes, From, To)
