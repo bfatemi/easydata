@@ -23,7 +23,6 @@
 #' #
 #' xSplit(x=dt, list(ColA = 3:4, ColB = "c"))
 #' @export
-
 xSplit <- function(x=NULL, ll=NULL){
 
     # x is not optional
@@ -39,7 +38,7 @@ xSplit <- function(x=NULL, ll=NULL){
         vals <- ll[[k]]
         lapply(vals, function(i) x[which(do.call(`==`, list(i, get(k))))])
     }
-    sapply(cols, f, USE.NAMES = T)
+    sapply(cols, f, USE.NAMES = T, simplify = F)
 }
 
 
