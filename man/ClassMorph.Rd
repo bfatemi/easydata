@@ -5,9 +5,9 @@
 \alias{NumMorph}
 \title{Functions to Change Column Classes}
 \usage{
-ClassMorph(dt, old = c("factor", "integer", "character", "numeric"),
-  new = c("factor", "integer", "character", "numeric"), copy = FALSE,
-  force = FALSE)
+ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
+  "logical"), new = c("factor", "integer", "character", "numeric"),
+  copy = FALSE, force = FALSE)
 
 NumMorph(dt, cols = NULL, copy = FALSE)
 }
