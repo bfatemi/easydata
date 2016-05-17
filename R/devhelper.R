@@ -33,6 +33,8 @@
 #' 
 #' @example /examples/example-checkdt.R
 #' 
+#' @export
+#' 
 #' @import data.table
 checkdt <- function(dt=NULL, cols=NULL, noerror=FALSE){
     if(is.null(dt)){

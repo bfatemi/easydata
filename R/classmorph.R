@@ -99,7 +99,7 @@ ClassMorph <- function(dt,
 #' @export
 #' 
 #' @import data.table
-NumMorph <- function(dt, cols=NULL, copy=FALSE){
+NumMorph <- function(dt, cols=NULL, copy=F, verbose=F){
     checkdt(dt, cols)
 
     if(copy)
@@ -115,7 +115,8 @@ NumMorph <- function(dt, cols=NULL, copy=FALSE){
                 set(dt, j=cols[i], value = as.numeric(dt[, get(cols[i])]))
                 f(i + 1)
             }, warning = function(e){
-                warning(paste0("Conversion generated NA. Skipping column: ", cols[i]))
+                if(verbose)
+                    warning(paste0("Conversion generated NA. Skipping column: ", cols[i]), call. = F)
                 f(i + 1)
             })
         }

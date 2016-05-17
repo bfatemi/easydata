@@ -9,7 +9,7 @@ ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
   "logical"), new = c("factor", "integer", "character", "numeric"),
   copy = FALSE, force = FALSE)
 
-NumMorph(dt, cols = NULL, copy = FALSE)
+NumMorph(dt, cols = NULL, copy = F, verbose = F)
 }
 \arguments{
 \item{dt}{A data.table to morph column classes}
