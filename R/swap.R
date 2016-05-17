@@ -17,6 +17,8 @@
 #' @family quick wranglers
 #' @example /examples/example-swap.R
 #' @export
+#' 
+#' @import data.table
 xSwap <- function(dt=NULL, find=NA, swap=NULL, cols=NULL, force=FALSE, copy=FALSE){
 
     if(is.null(dt))

@@ -13,6 +13,8 @@
 #' @family quick wranglers
 #' @example /examples/example-splice.R
 #' @export
+#' 
+#' @import data.table
 splice <- function(DT=NULL, ..., apply=NULL){
     # Save call to extract subset conditions. Remove the fn from call obj.
     slice <- sys.call()

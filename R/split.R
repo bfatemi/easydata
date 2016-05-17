@@ -23,6 +23,7 @@
 #' #
 #' xSplit(x=dt, list(ColA = 3:4, ColB = "c"))
 #' @export
+#' 
 xSplit <- function(x=NULL, ll=NULL){
 
     # x is not optional

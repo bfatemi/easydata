@@ -28,6 +28,8 @@
 #' @describeIn ClassMorph A function to convert all columns of class "old" to class "new". This
 #' function handles the indirect conversions sometimes needed to avoid data loss or
 #' unexpected results (see details).
+#' 
+#' @import data.table
 ClassMorph <- function(dt,
                        old   = c("factor","integer","character","numeric","logical"),
                        new   = c("factor","integer","character","numeric"),
@@ -95,6 +97,8 @@ ClassMorph <- function(dt,
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
 #'      dt, where a conversion to numeric would not generate NA values. 
 #' @export
+#' 
+#' @import data.table
 NumMorph <- function(dt, cols=NULL, copy=FALSE){
     checkdt(dt, cols)
 

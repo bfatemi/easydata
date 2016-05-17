@@ -30,7 +30,10 @@
 #'      code execution is stopped if one of the checks fail. See details for the checks 
 #'      that are performed.
 #' @keywords internal
+#' 
 #' @example /examples/example-checkdt.R
+#' 
+#' @import data.table
 checkdt <- function(dt=NULL, cols=NULL, noerror=FALSE){
     if(is.null(dt)){
         if(noerror) 

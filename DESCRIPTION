@@ -1,13 +1,14 @@
 Package: easydata
-Title: Easy Data Wrangling
+Title: Utility functions for easy data wrangling
 Version: 0.0.0.9000
 Authors@R: person("Bobby", "Fatemi", email = "bfatemi07@gmail.com", role = c("aut", "cre"))
 Description: This package provides a set of functions built on top of data.tables that attempt
     to facilitate data wrangling by bundling common data exploration work flows. easydata
     is a simplified interface between the data analyst who may not be familiar with R, 
     and operations on data using data.tables.
-Depends: R (>= 3.2.2)
-Imports:
+Depends: 
+    R (>= 3.2.2),
     data.table
+Imports:
 License: MIT
 LazyData: true

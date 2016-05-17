@@ -26,6 +26,7 @@
 #' @describeIn rFilter_All A function to filter rows of a data.table
 #' @export
 #' 
+#' @import data.table
 rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
     checkdt(dt, cols)
     
@@ -48,6 +49,8 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
 #' @param exact A boolean that describes whether to exactly match. Default is FALSE which means a text based
 #'      search will occur in order to match whether val is contained in the row
 #' @export
+#' 
+#' @import data.table
 rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
     if(is.na(val))
         dt <- dt[Reduce("|", lapply(colnames(dt), function(i) is.na(get(i))))]
@@ -72,6 +75,8 @@ rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
 
 #' @describeIn rFilter_All A function to filter columns of a data.table
 #' @export
+#' 
+#' @import data.table
 cRemoveNA <- function(dt){
     cols <- copy(colnames(dt))
     for(k in cols){
@@ -82,6 +87,8 @@ cRemoveNA <- function(dt){
 
 #' @describeIn rFilter_All A function to filter columns of a data.table
 #' @export
+#' 
+#' @import data.table
 cFilter <- function(dt, val=NA, boolfun=NULL, cols=NULL){
     
     

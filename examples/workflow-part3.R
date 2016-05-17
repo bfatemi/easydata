@@ -10,6 +10,7 @@ mDT <- melt(DT, id.vars = c("COUNTRY", "Quarter", "Year"))
 # There is one important thing to remember. In our new "variable" column, we have two types of
 # measures. We have "Access" as a percentage, and "Speed" as Mbps. Let's identify that through
 # the use of rFilter:
+rFilter(mDT,val = "Access")
 a <- rFilter(mDT,val = "Access", set=list(Access = 1))
 b <- rFilter(mDT,val = "Speed",  set=list(Access = 0))
 

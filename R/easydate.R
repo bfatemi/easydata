@@ -10,6 +10,8 @@
 #' @family class handler
 #' @example /examples/example-classmorph.R
 #' @export
+#' 
+#' @import data.table
 DateMorph <- function(dt, cols=NULL, format=NULL, tz=c("current","utc","gmt"), copy=FALSE){
     if(missing(tz))
         tz <- "current"
