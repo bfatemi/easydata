@@ -9,6 +9,7 @@ Description: This package provides a set of functions built on top of data.table
 Depends: 
     R (>= 3.2.2),
     data.table
-Imports:
+Imports: 
 License: MIT
 LazyData: true
+Suggests: testthat
