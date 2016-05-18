@@ -1,0 +1,45 @@
+PackratFormat: 1.4
+PackratVersion: 0.4.7.9
+RVersion: 3.2.2
+Repos: CRAN=https://mran.revolutionanalytics.com/snapshot/2015-08-27
+
+Package: crayon
+Source: CRAN
+Version: 1.3.1
+Hash: b61d34886cf0f4b4fc4e4f52ea249390
+Requires: memoise
+
+Package: data.table
+Source: github
+Version: 1.9.7
+Hash: 4792e44da4aa17576f730b4ceae4e73e
+GithubRepo: data.table
+GithubUsername: Rdatatable
+GithubRef: master
+GithubSha1: bdb76ff500495d349868020ef39dbcabcbdfc1fe
+
+Package: digest
+Source: CRAN
+Version: 0.6.8
+Hash: de202f956596a476d09304e3a2ebf1e5
+
+Package: memoise
+Source: CRAN
+Version: 0.2.1
+Hash: 812e6a1dd77a0ca4da41f3239de8e447
+Requires: digest
+
+Package: packrat
+Source: github
+Version: 0.4.7-9
+Hash: cb813000f5c36e0eff4bc6f0b67f91eb
+GithubRepo: packrat
+GithubUsername: rstudio
+GithubRef: master
+GithubSha1: d04c33541957f1d8c1f8344fcde11689e6277f83
+
+Package: testthat
+Source: CRAN
+Version: 0.10.0
+Hash: e1c29715cb8ae5e023b0b8ad64e308f7
+Requires: crayon, digest

@@ -88,6 +88,6 @@ DateMorph(dt, "Date")
 class(dt[, Date]) # check col classes
 }
 \seealso{
-Other class handler: \code{\link{DateMorph}}
+Other class.handler: \code{\link{DateMorph}}
 }
 

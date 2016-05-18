@@ -15,9 +15,8 @@
 #'      is false and the swap is made in memory. See examples below.
 #' @return A modified copy of dt
 #' @family quick wranglers
-#' @example /examples/example-swap.R
+#' @example /examples/example-easyswap.R
 #' @export
-#' 
 easyswap <- function(dt=NULL, find=NA, swap=NULL, cols=NULL, force=FALSE, copy=FALSE){
 
     if(is.null(dt))

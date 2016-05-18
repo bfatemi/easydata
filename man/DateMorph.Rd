@@ -16,8 +16,7 @@ DateMorph(dt, cols = NULL, format = NULL, tz = c("current", "utc", "gmt"),
 }
 \description{
 The functions \code{\link{ClassMorph}}, and \code{\link{NumMorph}}, in addition to \code{DateMorph},
-are functions designed to make dealing with column classes easy. See examples for how
-to avoid uncessary frustrations related to unexpected column classes or date formats.
+are functions designed to make dealing with column classes easy.
 }
 \examples{
 ### EXAMPLES OF:
@@ -54,7 +53,7 @@ DateMorph(dt, "Date")
 class(dt[, Date]) # check col classes
 }
 \seealso{
-Other class handler: \code{\link{ClassMorph}},
+Other class.handler: \code{\link{ClassMorph}},
   \code{\link{NumMorph}}
 }
 
