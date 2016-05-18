@@ -3,6 +3,16 @@ PackratVersion: 0.4.7.9
 RVersion: 3.2.2
 Repos: CRAN=https://mran.revolutionanalytics.com/snapshot/2015-08-27
 
+Package: Rcpp
+Source: CRAN
+Version: 0.12.0
+Hash: 9cad2f0525579d98b5ec2536febaf0da
+
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
+
 Package: crayon
 Source: CRAN
 Version: 1.3.1
@@ -23,6 +33,11 @@ Source: CRAN
 Version: 0.6.8
 Hash: de202f956596a476d09304e3a2ebf1e5
 
+Package: magrittr
+Source: CRAN
+Version: 1.5
+Hash: bdc4d48c3135e8f3b399536ddf160df4
+
 Package: memoise
 Source: CRAN
 Version: 0.2.1
@@ -37,6 +52,22 @@ GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: master
 GithubSha1: d04c33541957f1d8c1f8344fcde11689e6277f83
+
+Package: roxygen2
+Source: CRAN
+Version: 4.1.1
+Hash: 5dce64dda925a35cbbf1c1072dc1eed7
+Requires: Rcpp, brew, digest, stringr
+
+Package: stringi
+Source: CRAN
+Version: 0.5-5
+Hash: e7c67668a472e26e0c95bc8fa9049198
+
+Package: stringr
+Source: CRAN
+Version: 1.0.0
+Requires: magrittr, stringi
 
 Package: testthat
 Source: CRAN
