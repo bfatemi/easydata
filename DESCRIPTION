@@ -11,3 +11,4 @@ Imports: data.table
 License: MIT
 LazyData: true
 Suggests: testthat
+Repository: rstore
