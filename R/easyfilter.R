@@ -45,7 +45,7 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
 }
 
 #' @describeIn rFilter_All A function to apply a text based search to a given data table's rows and columns,
-#'      returning rows where any column's value meets the search condition
+#'      returning rows and columns where the corresponding value meets the search critera
 #' @param exact A boolean that describes whether to exactly match. Default is FALSE which means a text based
 #'      search will occur in order to match whether val is contained in the row
 #' @export
@@ -71,26 +71,4 @@ rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
         set(dt, j=cname, value=set[[1]])
     }
     return(dt)
-}
-
-#' @describeIn rFilter_All A function to filter columns of a data.table
-#' @export
-#' 
-#' @import data.table
-cRemoveNA <- function(dt){
-    cols <- copy(colnames(dt))
-    for(k in cols){
-        if(sum(is.na(dt[, k, with=F])) == nrow(dt))
-            set(dt, j=k, value=NULL)
-    }
-}
-
-#' @describeIn rFilter_All A function to filter columns of a data.table
-#' @export
-#' 
-#' @import data.table
-cFilter <- function(dt, val=NA, boolfun=NULL, cols=NULL){
-    
-    
-    
 }

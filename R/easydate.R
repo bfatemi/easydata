@@ -1,8 +1,7 @@
 #' Functions to Change Column Classes
 #'
 #' The functions \code{\link{ClassMorph}}, and \code{\link{NumMorph}}, in addition to \code{DateMorph},
-#' are functions designed to make dealing with column classes easy. See examples for how
-#' to avoid uncessary frustrations related to unexpected column classes or date formats.
+#' are functions designed to make dealing with column classes easy.
 #'
 #' @param dt A data.table to morph column classes
 #' @param format Format of the value to convert to date. See examples for acceptable formats.
