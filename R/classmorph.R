@@ -58,6 +58,8 @@ ClassMorph <- function(dt,
     # E.g.  direct:   factor -> numeric
     #       indirect: factor -> character -> numeric
     #
+    
+    
     types <- c("factor","integer","character","numeric","logical")
     
     dtTypes <- CJ(From = types, To = types)
@@ -65,6 +67,7 @@ ClassMorph <- function(dt,
     
     dtTypes[.("factor", "numeric"), CharFirst := TRUE]
     dtTypes[is.na(CharFirst), CharFirst := FALSE]
+    
     
     # If "from/to" pair requires indirect conversion, then wrap captured
     # column in a call to "as.character"
@@ -76,16 +79,34 @@ ClassMorph <- function(dt,
     # Get position of cols to convert
     cols <- which(sapply(dt, class) == old)
     
-    #k <- names(cols)[1]
+    
     # For each col, evaluate call & set new
+    if(new == "character")
+        navector <- rep(NA_character_, nrow(dt))
+    else if(new == "numeric")
+        navector <- rep(NA_real_, nrow(dt))
+    else
+        navector <- rep(NA, nrow(dt))
+    
+    # Set columns to fill
+    dt[, (paste0("new_", names(cols))) := (navector)]
+    
     for (k in names(cols)){
-        ind <- !sapply(eval(colK), is.null)
+        
+        
+        # Removed functionality:
+        # Get the index of non-null elements (nulls get collapsed by default
+        # but we want the number of replacement elements to match the number
+        # of rows in the dt we are replacing in)
+        
+
         val <- eval(call(paste0("as.", new), colK))
         newk <- paste0("new_", k)
-        set(dt, j = newk, value = eval(call(paste0("as.", new), rep(NA, nrow(dt)))))
-        set(dt, i = which(ind), j = newk, value = val)
+
+        set(dt, j = newk, value = val)
         set(dt, j = k, value = NULL)
         setnames(dt, newk, k)
+        
     }
     
     # reset column orders
