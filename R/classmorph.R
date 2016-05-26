@@ -9,7 +9,7 @@
 #' not convert to a \code{numeric} "1". To get around this common frustration, this function
 #' will perform an indirect conversion to \code{character} before converting to \code{numeric})
 #' 
-#' @param dt A data.table to morph column classes
+#' @param dt A data.table to use for any "class" operations
 #' @param old ClassMorph only. A column type, specified as a character value, to detect
 #'      and convert to the class specified by 'new'
 #' @param new ClassMorph only. A column type, specified as a character value, to 
@@ -146,5 +146,9 @@ NumMorph <- function(dt, cols=NULL, copy=F, verbose=F){
     return(dt)
 }
 
-
-
+#' @describeIn ClassMorph A wrapper to sapply that prints the class of each column on the R console 
+#'
+#' @export
+pclass <- function(dt){
+    print(sapply(dt, class))
+}
