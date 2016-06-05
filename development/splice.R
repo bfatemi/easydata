@@ -16,9 +16,9 @@
 #' 
 #' @import data.table
 splice <- function(DT=NULL, ...){
-    # Save call to extract subset conditions. Remove the fn from call obj.
-    slice <- sys.call()
-    slice <- slice[-1]
+    
+    slice <- sys.call() # Save call to extract subset conditions
+    slice <- slice[-1]  # Remove the fn from call obj
 
     # Define helper function to recursive extract 'AND' or 'OR' values
     RecurseGet <- function(a){
@@ -29,16 +29,13 @@ splice <- function(DT=NULL, ...){
         if(length(newa) > 0)
             return(c(values, RecurseGet(a = newa[[-1]])))
 
-        # return final vector of results
-        return(values)
+        return(values) # final vector of results
     }
 
-    #----------------------------------------------------
-    # Extract args: Store the data with a lazy call
-    #----------------------------------------------------
+    # Extract args: Store the data with a lazy call. Data not optional
     dInd <- which(names(slice) == "DT")
 
-    # data is not optional
+    
     if(!length(dInd))
         stop("Provide data in 'DT' argument to subset", call. = F)
 
