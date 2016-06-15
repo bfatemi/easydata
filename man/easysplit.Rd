@@ -4,7 +4,7 @@
 \alias{easysplit}
 \title{Quick and Efficient Data Splitting}
 \usage{
-easysplit(x = NULL, ll = NULL, simplify = FALSE)
+easysplit(x = NULL, ll = NULL)
 }
 \arguments{
 \item{x}{A data.table, matrix, or vector to split into list elements}

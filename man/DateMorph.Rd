@@ -10,9 +10,15 @@ DateMorph(dt, cols = NULL, format = NULL, tz = c("current", "utc", "gmt"),
 \arguments{
 \item{dt}{A data.table to morph column classes}
 
+\item{cols}{An optional character vector of column names to operate on.
+Not applicable for function ClassMorph.}
+
 \item{format}{Format of the value to convert to date. See examples for acceptable formats.}
 
 \item{tz}{A character value indicating the timezone. Options are: "current", "utc", and "gmt"}
+
+\item{copy}{A boolean value indicating whether to alter \code{dt} in memory or 
+whether to return a \emph{new (copy)} of the input data.table.}
 }
 \description{
 The functions \code{\link{ClassMorph}}, and \code{\link{NumMorph}}, in addition to \code{DateMorph},
@@ -30,6 +36,8 @@ to do both, only then changing the column class to the appropriate date class
 ###     1. ClassMorph()
 ###     2. DateMorph()
 ###     3. NumMorph()
+
+library(data.table)
 
 #### Create example data
 dt <- data.table(Int     = as.factor(c(1:2, "-", 4:5)),
@@ -58,8 +66,5 @@ sapply(dt, class) # check col classes
 #### Use DateMorph
 DateMorph(dt, "Date")
 class(dt[, Date]) # check col classes
-}
-\seealso{
-Other class.handler: \code{\link{ClassMorph}}
 }
 

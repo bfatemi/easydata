@@ -12,7 +12,7 @@
 #' @param dt A data.table to morph column classes
 #' @param format Format of the value to convert to date. See examples for acceptable formats.
 #' @param tz A character value indicating the timezone. Options are: "current", "utc", and "gmt"
-#' @family class handler
+#' @inheritParams ClassMorph
 #' @example /examples/example-classmorph.R
 #' 
 #' @import data.table

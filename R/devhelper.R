@@ -26,6 +26,8 @@
 #' 
 #' @param dt An object to make common checks to verify it is a valid data.table
 #' @param cols An optional character vector of column names to check against column names of dt
+#' @param noerror A boolean where if TRUE, checkdt will return a numeric error code 
+#'      instead of a generated error that results in code stoppage. Default value is FALSE
 #' @return Returns an error code if flag \code{noerror} is TRUE. Otherwise returns NULL or 
 #'      code execution is stopped if one of the checks fail. See details for the checks 
 #'      that are performed.

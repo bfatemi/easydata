@@ -5,12 +5,12 @@
 \alias{plyStat}
 \title{Summary Statistics}
 \usage{
-MorphStat(col, lab = "Value", d = 3, na.rm = TRUE)
+MorphStat(x, lab = "Value", d = 3, na.rm = TRUE)
 
 plyStat(dt, cols)
 }
 \arguments{
-\item{col}{An r expression naming the column to run a custom set of statistics functions on}
+\item{x}{An r expression naming the column to run a custom set of statistics functions on}
 
 \item{lab}{A character value labeling a newly created column of results. Default is "Value"}
 
@@ -18,6 +18,11 @@ plyStat(dt, cols)
 
 \item{na.rm}{A boolean with a default of TRUE that indicates whether NAs should be removed from the 
 calculation.}
+
+\item{dt}{A data.table to apply MorphStat through}
+
+\item{cols}{An optional argument for \code{plyStats} that subsets the data.table by column
+prior to applying MorphStat functions}
 }
 \description{
 A set of functions to run a set of customized summary statistics on 1 numeric column of a data.table or
@@ -25,10 +30,11 @@ all columns of a data.table that contains only numeric values.
 }
 \section{Functions}{
 \itemize{
-\item \code{MorphStat}: A function to apply a set of summary statistics function to a column in a data.table
+\item \code{MorphStat}: A function to apply a set of summary statistics function 
+to a column in a data.table
 
 \item \code{plyStat}: A wrapper that has vectorized \code{MorphStat} over a number of columns specified by the 
-argument \code{col}
+argument \code{x}
 }}
 \examples{
 #

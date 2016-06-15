@@ -22,7 +22,6 @@
 #'      to class numeric despite NAs being generated.
 #' @return Returns a data.table that is either a copy of the input dt that 
 #'      has been modified, or the same input dt that has been modified in memory
-#' @family class handler
 #' @example /examples/example-classmorph.R
 #' @export
 #' @describeIn ClassMorph A function to convert all columns of class "old" to class "new". This
@@ -115,10 +114,12 @@ ClassMorph <- function(dt,
 
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
 #'      dt, where a conversion to numeric would not generate NA values. 
+#' 
+#' @param verbose A boolean indicating whether to be chatty
 #' @export
 #' 
 #' @import data.table
-NumMorph <- function(dt, cols=NULL, copy=F, verbose=F){
+NumMorph <- function(dt, cols=NULL, copy=FALSE, verbose=FALSE){
     checkdt(dt, cols)
 
     if(copy)

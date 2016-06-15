@@ -10,6 +10,9 @@ checkdt(dt = NULL, cols = NULL, noerror = FALSE)
 \item{dt}{An object to make common checks to verify it is a valid data.table}
 
 \item{cols}{An optional character vector of column names to check against column names of dt}
+
+\item{noerror}{A boolean where if TRUE, checkdt will return a numeric error code 
+instead of a generated error that results in code stoppage. Default value is FALSE}
 }
 \value{
 Returns an error code if flag \code{noerror} is TRUE. Otherwise returns NULL or 

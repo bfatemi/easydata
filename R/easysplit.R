@@ -23,7 +23,7 @@
 #' #
 #' easysplit(x=dt, list(ColA = 3:4, ColB = "c"))
 #' @export
-easysplit <- function(x=NULL, ll=NULL, simplify=FALSE){
+easysplit <- function(x=NULL, ll=NULL){
 
     # x is not optional
     if(is.null(x))

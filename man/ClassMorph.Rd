@@ -10,7 +10,7 @@ ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
   "logical"), new = c("factor", "integer", "character", "numeric"),
   copy = FALSE, force = FALSE)
 
-NumMorph(dt, cols = NULL, copy = F, verbose = F)
+NumMorph(dt, cols = NULL, copy = FALSE, verbose = FALSE)
 
 pclass(dt)
 }
@@ -31,6 +31,8 @@ to class numeric despite NAs being generated.}
 
 \item{cols}{An optional character vector of column names to operate on.
 Not applicable for function ClassMorph.}
+
+\item{verbose}{A boolean indicating whether to be chatty}
 }
 \value{
 Returns a data.table that is either a copy of the input dt that 
@@ -64,6 +66,8 @@ dt, where a conversion to numeric would not generate NA values.
 ###     2. DateMorph()
 ###     3. NumMorph()
 
+library(data.table)
+
 #### Create example data
 dt <- data.table(Int     = as.factor(c(1:2, "-", 4:5)),
                  Double  = rep(2.0, 5),
@@ -91,8 +95,5 @@ sapply(dt, class) # check col classes
 #### Use DateMorph
 DateMorph(dt, "Date")
 class(dt[, Date]) # check col classes
-}
-\seealso{
-Other class.handler: \code{\link{DateMorph}}
 }
 

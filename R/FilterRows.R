@@ -22,6 +22,9 @@
 #'      is the new column value. This is ideal when needing to quick boolean or indicator column to 
 #'      identify the group that was just filtered. See examples
 #'      
+#' @describeIn rFilter_All A function to filter rows in a data.table based on a search
+#' condition applied through all columns. Rows such that a match is made in every column
+#' will be returned. For a less strict rule, see \code{rFilter}
 #' @export
 #' @import data.table
 rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
@@ -70,6 +73,7 @@ rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
     return(dt)
 }
 
+#' @describeIn rFilter_All NOT IMPLEMENTED
 #' @export
 FilterRows <- rFilter
 

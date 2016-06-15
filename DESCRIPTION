@@ -10,8 +10,10 @@ Description: This package provides a set of functions built on top of
 Depends:
     R (>= 3.2.2)
 Imports:
-    data.table
-License: MIT
+    data.table,
+    pryr,
+    stringr
+License: MIT + file LICENSE
 LazyData: true
 Suggests:
     testthat

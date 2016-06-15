@@ -3,6 +3,8 @@
 ###     2. DateMorph()
 ###     3. NumMorph()
 
+library(data.table)
+
 #### Create example data
 dt <- data.table(Int     = as.factor(c(1:2, "-", 4:5)),
                  Double  = rep(2.0, 5),
