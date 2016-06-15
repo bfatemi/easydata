@@ -18,10 +18,10 @@
 #'     The following error codes are generated when each of the above situations 
 #'     occur, \strong{and the flag \code{noerror} is set to TRUE:}
 #'          \itemize{
-#'              \item{if null:} 999
-#'              \item{if class not data.table:} 101
-#'              \item{if empty:} 555
-#'              \item{if cols not column names:} 422
+#'              \item{if null: 999} 
+#'              \item{if class not data.table: 101} 
+#'              \item{if empty: 555} 
+#'              \item{if cols not column names: 422} 
 #'          }
 #' 
 #' @param dt An object to make common checks to verify it is a valid data.table
@@ -32,8 +32,26 @@
 #'      code execution is stopped if one of the checks fail. See details for the checks 
 #'      that are performed.
 #' 
-#' @example /examples/example-checkdt.R
+#' @examples
+#' \dontrun{
+#' #### dt is NULL
+#' checkdt(dt = NULL) # Prints "Error: no data.table provided"
+#' checkdt(dt = NULL, noerror = TRUE) # Returns 999
 #' 
+#' #### dt not class data.table(data.table)
+#' checkdt(dt = "test") # Prints "Error: dt not of class data.table or data.frame"
+#' checkdt(dt = "test", noerror = TRUE) # Returns 101
+#' 
+#' #### dt has 0 rows
+#' checkdt(dt = data.table()) # Prints "Error: no data in dt"
+#' checkdt(dt = data.table(), noerror = TRUE) # Returns 555
+#' 
+#' #### check columns also
+#' DT <- data.table(X = 1, Y = 2)
+#' 
+#' checkdt(dt = DT, cols = c("A", "B")) # Prints "Error: the following cols not in data.table: A, B"
+#' checkdt(dt = DT, noerror = TRUE) # Returns 422
+#' }
 #' @export
 #' @import data.table
 checkdt <- function(dt=NULL, cols=NULL, noerror=FALSE){

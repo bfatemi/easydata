@@ -38,13 +38,14 @@ Returns an error code if flag \code{noerror} is TRUE. Otherwise returns NULL or
     The following error codes are generated when each of the above situations 
     occur, \strong{and the flag \code{noerror} is set to TRUE:}
          \itemize{
-             \item{if null:} 999
-             \item{if class not data.table:} 101
-             \item{if empty:} 555
-             \item{if cols not column names:} 422
+             \item{if null: 999} 
+             \item{if class not data.table: 101} 
+             \item{if empty: 555} 
+             \item{if cols not column names: 422} 
          }
 }
 \examples{
+\dontrun{
 #### dt is NULL
 checkdt(dt = NULL) # Prints "Error: no data.table provided"
 checkdt(dt = NULL, noerror = TRUE) # Returns 999
@@ -62,5 +63,6 @@ DT <- data.table(X = 1, Y = 2)
 
 checkdt(dt = DT, cols = c("A", "B")) # Prints "Error: the following cols not in data.table: A, B"
 checkdt(dt = DT, noerror = TRUE) # Returns 422
+}
 }
 

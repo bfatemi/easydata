@@ -13,7 +13,6 @@
 #' @param format Format of the value to convert to date. See examples for acceptable formats.
 #' @param tz A character value indicating the timezone. Options are: "current", "utc", and "gmt"
 #' @inheritParams ClassMorph
-#' @example /examples/example-classmorph.R
 #' 
 #' @import data.table
 DateMorph <- function(dt, cols=NULL, format=NULL, tz=c("current","utc","gmt"), copy=FALSE){

@@ -1,6 +1,6 @@
 #' Functions to Change Column Classes
 #'
-#' The functions \code{ClassMorph}, and \code{NumMorph}, in addition to \code{\link{DateMorph}},
+#' The functions \code{ClassMorph}, and \code{NumMorph}, in addition to \code{DateMorph},
 #' are functions designed to make dealing with column classes easy. See examples for how
 #' to avoid uncessary frustrations related to unexpected column classes or date formats.
 #' 
@@ -17,12 +17,26 @@
 #' @param cols An optional character vector of column names to operate on.
 #'      Not applicable for function ClassMorph.
 #' @param copy A boolean value indicating whether to alter \code{dt} in memory or 
-#'      whether to return a \emph{new (copy)} of the input data.table.
+#'      whether to return a new (copy) of the input data.table.
 #' @param force A boolean indicating whether to force conversion from class factor
 #'      to class numeric despite NAs being generated.
 #' @return Returns a data.table that is either a copy of the input dt that 
 #'      has been modified, or the same input dt that has been modified in memory
-#' @example /examples/example-classmorph.R
+#' @examples
+#' #-------------------------------------------------------------------------------------
+#' # Example: Change column classes in batch
+#' #-------------------------------------------------------------------------------------
+#' library(data.table)
+#' dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
+#'                  B = rep(2.0, 5),
+#'                  C = as.factor(c(1, "garbage", 2, "", 3)),
+#'                  D = as.factor(rep(999, 5)),
+#'                  E = letters[1:5],
+#'                  F = rep("2020-01-22", 5))
+#' 
+#' ClassMorph(dt, "factor", "integer", force = TRUE) # no error
+#' pclass(dt)
+#' 
 #' @export
 #' @describeIn ClassMorph A function to convert all columns of class "old" to class "new". This
 #' function handles the indirect conversions sometimes needed to avoid data loss or

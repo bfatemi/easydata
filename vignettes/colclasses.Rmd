@@ -1,0 +1,76 @@
+---
+title: "Changing Column Classes in Batch"
+author: "Bobby Fatemi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Changing Column Classes in Batch}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Example: Change column classes in batch
+
+```{r}
+library(data.table)
+library(easydata)
+
+# Create example data
+dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
+                 B = rep(2.0, 5),
+                 C = as.factor(c(1, "garbage", 2, "", 3)),
+                 D = as.factor(rep(999, 5)),
+                 E = letters[1:5],
+                 F = rep("2020-01-22", 5))
+dt
+
+# print column classes
+pclass(dt) 
+```
+
+### Errors when generating NA
+
+The following line will generate NAs because there is an element called "garbage" in the column Factor. In fact, a missed non-numeric value in an otherwise all numeric column is a common reason the class automatically gets read as a factor. 
+
+#### Change all factor columns to integer columns
+
+```{r, error=TRUE}
+ClassMorph(dt, "factor", "integer") #results in ERROR
+```
+
+See how to use the 'force' flag to bypass expected transformations (we expected NAs in the example above)
+
+### The 'force' flag
+
+Naturally, when converting "garbage" to an integer, you will get an NA. To prevent accidental loss of data, the default behavior is to generate an error when conversion creates NAs. This should only be expected to happen when going from factor to numeric/integer. In cases where NAs are expected, set the force flag = TRUE:
+
+```{r}
+ClassMorph(dt, "factor", "integer", force = TRUE) # no error
+pclass(dt)
+```
+
+
+### The 'copy' flag
+
+When 'copy' is set to TRUE, `ClassMorph` does not modify the data *in place*. Rather, it generates a new copy of dt. Notice in the previous examples, ClassMorph had no return object. That is due to the fact that ClassMorph was modifying the data in-place. Traditionally R has been a "copy-on-modify" language. This is typically not the norm today as we expect to work with larger & larger datasets. However, in some cases 'copy-on-modify' is desired. For example, if we want to be conservative about accidental data loss, we would specify the flag 'copy=TRUE' and then
+manually delete the old table.
+
+```{r, results='hold'}
+newdt <- ClassMorph(dt, "numeric", "factor", copy = TRUE)
+
+identical(cc(dt), cc(newdt))    # classes are not equal
+pclass(dt)                      # confirm correct conversion
+pclass(newdt)
+```
+
+> IMPORTANT: without specifying 'copy=TRUE', newdt is simply just pointing to dt. See demonstration of this below.
+
+```{r, results='hold'}
+pclass(dt)
+newdt <- ClassMorph(dt, "numeric", "factor")
+
+identical(cc(dt), cc(newdt))
+identical(dt, newdt)  
+```
+
+***

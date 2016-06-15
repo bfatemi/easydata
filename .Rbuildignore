@@ -1,7 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^packrat/
 ^\.Rprofile$
 ^development
 ^example-data/
 ^examples/
+^\.travis\.yml$
+^deleteman
