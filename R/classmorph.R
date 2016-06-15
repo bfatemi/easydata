@@ -35,23 +35,23 @@ ClassMorph <- function(dt,
                        copy  = FALSE,
                        force = FALSE){
     
+    
     # NEED TO IMPLEMENT force
     # trace how NAs are/could be generated and return error. recommend to 
     # rerun with force=TRUE
-    
     # ERROR WITH FACTOR TO INTEGER. NO CONVERSION TO CHARACTER FIRST
+    if(!old %in% sapply(dt, class))
+        stop("No columns of class specified with the argument 'old'", call. = FALSE)
     
-    # Capture args
-    old <- match.arg(old)
+    old <- match.arg(old) # Capture args
     new <- match.arg(new)
     
-    checkdt(dt)
+    checkdt(dt) # standard checks
+    colorder <- copy(colnames(dt)) # Save original column order. Set at end
     
-    # Save original column order. Set at end
-    colorder <- copy(colnames(dt))
-    
-    if(copy)
-        dt <- copy(dt)
+    cdt <- dt
+    if(copy) 
+        cdt <- copy(dt)
     
     # Get all pairs and id those that require indirect conversion
     # E.g.  direct:   factor -> numeric
@@ -63,53 +63,66 @@ ClassMorph <- function(dt,
     setkey(dtTypes, From, To)
     
     dtTypes[.("factor", "numeric"), CharFirst := TRUE]
+    dtTypes[.("factor", "integer"), CharFirst := TRUE]
     dtTypes[is.na(CharFirst), CharFirst := FALSE]
     
     
     # If "from/to" pair requires indirect conversion, then wrap captured
     # column in a call to "as.character"
     #
-    colK <- quote(dt[[k]])
+    
+    colK <- quote(cdt[[k]])
     if( dtTypes[.(old, new), CharFirst] )
         colK <- call("as.character", colK)
     
     # Get position of cols to convert
-    cols <- which(sapply(dt, class) == old)
+    cols <- which(sapply(cdt, class) == old)
     
     
     # For each col, evaluate call & set new
-    if(new == "character")
-        navector <- rep(NA_character_, nrow(dt))
-    else if(new == "numeric")
-        navector <- rep(NA_real_, nrow(dt))
-    else
-        navector <- rep(NA, nrow(dt))
+    if(new == "character"){
+        navector <- rep(NA_character_, nrow(cdt))
+    }else if(new == "numeric"){
+        navector <- rep(NA_real_, nrow(cdt))
+    }else if(new == "integer"){
+        navector <- rep(NA_integer_, nrow(cdt))
+    }else{
+        navector <- rep(NA, nrow(cdt))
+    }
+        
     
     # Set columns to fill
-    dt[, (paste0("new_", names(cols))) := (navector)]
+    cdt[, (paste0("new_", names(cols))) := (navector)]
     
     for (k in names(cols)){
-        
         
         # Removed functionality:
         # Get the index of non-null elements (nulls get collapsed by default
         # but we want the number of replacement elements to match the number
-        # of rows in the dt we are replacing in)
+        # of rows in the cdt we are replacing in)
         
-
-        val <- eval(call(paste0("as.", new), colK))
+        val <- tryCatch(eval(call(paste0("as.", new), colK)),
+                        warning = function(c){
+                            if(!force){
+                                cdt[, (paste0("new_", names(cols))) := NULL] # reset data table
+                                stop("Conversion generated NAs. If expected set force=TRUE", call. = FALSE)
+                            }
+                            return(suppressWarnings(eval(call(paste0("as.", new), colK))))
+                        })
+        
         newk <- paste0("new_", k)
-
-        set(dt, j = newk, value = val)
-        set(dt, j = k, value = NULL)
-        setnames(dt, newk, k)
-        
+        set(cdt, j = newk, value = val)
     }
     
-    # reset column orders
-    setcolorder(dt, colorder)
+    # now that we have new cols with correct classes, 
+    # delete old ones and change new names to previous names
+    cdt[, (names(cols)) := NULL]
+    setnames(cdt, paste0("new_", names(cols)), names(cols))
     
-    return(dt)
+    # reset column orders
+    setcolorder(cdt, colorder)
+    
+    return(cdt)
 }
 
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
@@ -150,4 +163,11 @@ NumMorph <- function(dt, cols=NULL, copy=FALSE, verbose=FALSE){
 #' @export
 pclass <- function(dt){
     print(sapply(dt, class))
+}
+
+#' @describeIn ClassMorph Similar to \code{pclass} except this function returns an object, 
+#'      instead of simply printing to the console
+#' @export
+cc <- function(dt){
+    sapply(dt, class)
 }

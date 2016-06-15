@@ -32,39 +32,72 @@ in the table, while also identifying the format of the dates, using \code{fudate
 to do both, only then changing the column class to the appropriate date class
 }
 \examples{
-### EXAMPLES OF:
-###     1. ClassMorph()
-###     2. DateMorph()
-###     3. NumMorph()
-
 library(data.table)
 
-#### Create example data
+#-------------------------------------------------------------------------------------
+# Example: Change column classes in batch
+#-------------------------------------------------------------------------------------
+
+# Create example data
 dt <- data.table(Int     = as.factor(c(1:2, "-", 4:5)),
                  Double  = rep(2.0, 5),
-                 Factor  = as.factor(c(1, "", 2, "", 3)),
+                 Factor  = as.factor(c(1, "garbage", 2, "", 3)),
                  nFactor = as.factor(rep(999, 5)),
                  Char    = letters[1:5],
                  Date    = rep("2020-01-22", 5))
-print(dt)
-sapply(dt, class) # check col classes
-
-#### Change all Factors to Integers
-ClassMorph(dt, "factor", "integer")
-sapply(dt, class) # check col classes
-
-#### Other options include:
+dt
+#-------------------------------------------------------------------------------------
+# Errors when generating NA
 #
-# not modifying dt in place, rather generate a new copy of dt
-ClassMorph(dt, "numeric", "factor", copy = TRUE)
+# The following line will generate NAs because there is an element called 
+# "garbage" in the column Factor. In fact, a missed non-numeric value in
+# an otherwise mostly number column is the main reason the class automatically
+# gets read as a factor. 
+pclass(dt)
+ClassMorph(dt, "factor", "integer")
 
-# forcing conversion despite generate of NAs
-ClassMorph(dt, "factor", "numeric", force = TRUE)
-sapply(dt, class) # check col classes
+#-------------------------------------------------------------------------------------
+# The 'force' flag
+#
+# Naturally, when converting "garbage" to an integer, you will get an NA.
+# To prevent accidental loss of data, the default behavior is to generate
+# an error when conversion creates NAs. This should only be expected to 
+# happen when going from factor to numeric/integer. In cases where NAs are expected,
+# set the force flag = TRUE:
+#
+ClassMorph(dt, "factor", "integer", force = TRUE) # no error
+pclass(dt)
+
+#-------------------------------------------------------------------------------------
+# The 'copy' flag
+#
+# Not modifying dt in place, rather generate a new copy of dt.
+# Notice in the previous examples, ClassMorph had no return object. That is due 
+# to the fact that ClassMorph was modifying the data in-place. Traditionally
+# r has been a "copy-on-modify" language. That is typically not the case today,
+# but in some cases it is desired. For example, if we want to be conservative 
+# about accidental data loss, we would specify the flag 'copy=TRUE' and then
+# manually delete the old table. 
+#
+newdt <- ClassMorph(dt, "numeric", "factor", copy = TRUE)
+
+identical(cc(dt), cc(newdt))    # classes are not equal
+pclass(dt)                      # confirm correct conversion
+pclass(newdt)
+
+#-------------------------------------------------------------------------------------
+# IMPORTANT: Note that without specifying 'copy=TRUE', newdt is simply just 
+# pointing to dt, as observed here:
+#
+pclass(dt)
+newdt <- ClassMorph(dt, "numeric", "factor")
+
+# dt and newdt are the same table in memory
+identical(cc(dt), cc(newdt))
+identical(dt, newdt)    
 
 
-#### Use DateMorph
-DateMorph(dt, "Date")
-class(dt[, Date]) # check col classes
+
+
 }
 
