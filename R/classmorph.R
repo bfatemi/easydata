@@ -58,8 +58,6 @@ ClassMorph <- function(dt,
     # E.g.  direct:   factor -> numeric
     #       indirect: factor -> character -> numeric
     #
-    
-    
     types <- c("factor","integer","character","numeric","logical")
     
     dtTypes <- CJ(From = types, To = types)

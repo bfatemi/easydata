@@ -1,7 +1,7 @@
 #' Easy & flexible column deletion
 #' 
-#' The function \code{cRemove} helps to remove columns of a data.table, data.frame, list, or generally
-#' any object with named elements efficiently with an intuitive interface
+#' The function \code{RemoveCols} helps to remove columns of a data.table, data.frame, list, 
+#' or generally any object with named elements efficiently with an intuitive interface
 #'
 #' @param dt A data.table that contains columns to remove 
 #' @param byname An optional character vector of length 1 or greater used when wanting to remove columns 
@@ -29,7 +29,7 @@
 #' @export
 #' 
 #' @import data.table
-cRemove <- function(dt, byname=NULL, byval=NULL, exact=TRUE, all=TRUE, copy=FALSE){
+RemoveCols <- function(dt, byname=NULL, byval=NULL, exact=TRUE, all=TRUE, copy=FALSE){
     cnames <- copy(colnames(dt))
     if(copy) dt <- copy(dt)
     

@@ -54,6 +54,6 @@ class(dt[, Date]) # check col classes
 }
 \seealso{
 Other class.handler: \code{\link{ClassMorph}},
-  \code{\link{NumMorph}}
+  \code{\link{NumMorph}}, \code{\link{pclass}}
 }
 

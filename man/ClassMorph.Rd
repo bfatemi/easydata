@@ -3,6 +3,7 @@
 \name{ClassMorph}
 \alias{ClassMorph}
 \alias{NumMorph}
+\alias{pclass}
 \title{Functions to Change Column Classes}
 \usage{
 ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
@@ -10,9 +11,11 @@ ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
   copy = FALSE, force = FALSE)
 
 NumMorph(dt, cols = NULL, copy = F, verbose = F)
+
+pclass(dt)
 }
 \arguments{
-\item{dt}{A data.table to morph column classes}
+\item{dt}{A data.table to use for any "class" operations}
 
 \item{old}{ClassMorph only. A column type, specified as a character value, to detect
 and convert to the class specified by 'new'}
@@ -52,6 +55,8 @@ unexpected results (see details).
 
 \item \code{NumMorph}: A function to standards classes to "numeric" for all columns of
 dt, where a conversion to numeric would not generate NA values.
+
+\item \code{pclass}: A wrapper to sapply that prints the class of each column on the R console
 }}
 \examples{
 ### EXAMPLES OF:

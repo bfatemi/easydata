@@ -1,18 +1,16 @@
 #' Quick filtering rows or columns
 #'
-#' \code{rFilter_All} is a function that enables quick filtering a data.table based on
-#'  a TRUE/FALSE condition applied down the column (e.g. returns entire row if
-#'  condition is TRUE for each value down rows of specified columns).
-#'  \code{cFilter} is analogous for columns. This will test a condition across rows
-#'  of every specified columns and drop each if the condition is met.
+#' The functions \code{rFilter_All} and \code{rFilter} enable quick filtering a 
+#' data.table based on a TRUE/FALSE condition applied down the column (e.g. returns 
+#' entire row if condition is TRUE for each value down rows of specified columns).
+#' 
 #' @param dt A data.table to filter rows or columns
-#' @param val A value to filter rows or columns on
+#' @param val A value to filter rows on
 #' @param boolfun A function that can be used instead of val to filter. This function
-#'      must be a "predicate" function applied across rows (\code{cFilter}), or down 
-#'      columns (\code{rFilter_All}). See details and examples below.
-#'      (returns T/F based on a test of values in dt
-#'      applied across rows, or down columns)
-#' @param cols An OPTIONAL character vector specifying columns to include as part of
+#'      must be a "predicate" function applied down columns (\code{rFilter_All/rFilter}). 
+#'      See details and examples below. (A predicate function returns T/F based on a test of 
+#'      values in dt applied across rows, or down columns)
+#' @param cols An optional character vector specifying columns to include as part of
 #'      testing the conditions. If cols is not provided, all column of dt will be 
 #'      tested
 #' @param copy A boolean indicating whether the returned data.table should be a 
@@ -23,9 +21,8 @@
 #'      set should be a named list where the name corresponds to the new column name, and the value
 #'      is the new column value. This is ideal when needing to quick boolean or indicator column to 
 #'      identify the group that was just filtered. See examples
-#' @describeIn rFilter_All A function to filter rows of a data.table
+#'      
 #' @export
-#' 
 #' @import data.table
 rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
     checkdt(dt, cols)
@@ -44,8 +41,7 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
     return(res)
 }
 
-#' @describeIn rFilter_All A function to apply a text based search to a given data table's rows and columns,
-#'      returning rows and columns where the corresponding value meets the search critera
+
 #' @param exact A boolean that describes whether to exactly match. Default is FALSE which means a text based
 #'      search will occur in order to match whether val is contained in the row
 #' @export
@@ -72,3 +68,10 @@ rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
     }
     return(dt)
 }
+
+#' @export
+FilterRows <- rFilter
+
+# @describeIn rFilter_All A function to filter rows of a data.table
+# @describeIn rFilter_All A function to apply a text based search across columns in a table,
+#       returning rows and columns where the corresponding value meets the search critera

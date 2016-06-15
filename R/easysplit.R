@@ -23,20 +23,17 @@
 #' #
 #' easysplit(x=dt, list(ColA = 3:4, ColB = "c"))
 #' @export
-#' 
-easysplit <- function(x=NULL, ll=NULL, simplify=F){
+easysplit <- function(x=NULL, ll=NULL, simplify=FALSE){
 
     # x is not optional
     if(is.null(x))
-        stop("Missing x argument", call. = F)
+        stop("Missing x argument", call. = FALSE)
 
     cols <- names(ll)
 
     if(!sum(cols %in% colnames(x)))
-        stop("Not all columns in x", call. = F)
+        stop("Not all columns in x", call. = FALSE)
 
-    k <- "ColA"
-    x <- dt
     f <- function(k){
         vals <- ll[[k]]
         out <- lapply(vals, function(i) x[which(do.call(`==`, list(i, get(k))))])

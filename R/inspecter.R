@@ -18,5 +18,6 @@
 #'      convient for objects of class data.table (data.frame)
 #' @export
 describe <- function(dt){
-    str(dt, no.list = T, vec.len = 2, give.attr = F, give.length = F)
+    warning("This function is deprecated", call. = FALSE)
+    str(dt, no.list = T, vec.len = 2, give.attr = FALSE, give.length = FALSE)
 }

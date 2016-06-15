@@ -13,3 +13,12 @@ t <- Sys.time()
 ClassMorph(DT, "factor", "character")
 Sys.time() - t
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+f <- function(){
+    
+}
