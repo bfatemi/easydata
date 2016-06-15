@@ -2,6 +2,7 @@
 #'
 #' The function \code{fudate} returns the regex pattern that identifies any date using most common date formats. 
 #' 
+#' @details 
 #' A universal regex pattern to 
 #' identify any date with certainty is very difficult to do. This regex uses built in logic to rule out 
 #' false positives despite having the correct format. To ensure accuracy, this pattern does not attempt
@@ -12,7 +13,7 @@
 #' 
 #'  \itemize{
 #'      \item{\code{ymd} identifies dates where the year is first, month second, followed by day.}
-#'      \item{The other options are: \code{ydm}, \code{mdy}, or \code{dmy}
+#'      \item{The other options are: \code{ydm}, \code{mdy}, or \code{dmy}}
 #'      \item{\code{yr4} is a boolean specifying whether to expect a 4 digit or 2 digit year. 
 #'      This is done to ensure the highest possible accuracy in the match}
 #'  }

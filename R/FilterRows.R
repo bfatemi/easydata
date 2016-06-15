@@ -41,7 +41,8 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
     return(res)
 }
 
-
+#' @describeIn rFilter_All A functional similar to \code{rFilter_All} except this 
+#'      function returns rows if one column meets search criteria
 #' @param exact A boolean that describes whether to exactly match. Default is FALSE which means a text based
 #'      search will occur in order to match whether val is contained in the row
 #' @export
