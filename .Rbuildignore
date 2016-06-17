@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^\.Rprofile$
 ^development
-^example-data/
 ^examples/
 ^\.travis\.yml$
-^deleteman
+^data-raw$

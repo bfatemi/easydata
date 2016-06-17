@@ -20,12 +20,6 @@
 #'
 #' @return A data.table such that some columns have been removed. If no columns were flagged for removal, 
 #'      an error code will be returned and a friendly message will be printed on the screen
-#' 
-#' @examples 
-#' dt <- data.table(A = 1:5, 
-#'                  B = letters[1:5], 
-#'                  C = 5:9, 
-#'                  D = rep("X", 5))
 #' @export
 #' 
 #' @import data.table
@@ -39,10 +33,10 @@ RemoveCols <- function(dt, byname=NULL, byval=NULL, exact=TRUE, all=TRUE, copy=F
     if(!is.null(byname)){
         if(exact){
             if(!sum(byname %in% cnames))
-                stop("no matched column names found", call. = F)
+                stop("no matched column names found", call. = FALSE)
             
             if(sum(byname %in% cnames) != length(byname))
-                warning("some columns provided by 'byname' are not in the data table", call. = F)
+                warning("some columns provided by 'byname' are not in the data table", call. = FALSE)
             
             for(col in cnames[which(cnames %in% byname)])
                 set(dt, j=col, value=NULL)
@@ -54,7 +48,7 @@ RemoveCols <- function(dt, byname=NULL, byval=NULL, exact=TRUE, all=TRUE, copy=F
     
     if(!is.null(byval)){
         for(col in cnames){
-            colvals <- dt[, col, with=F]
+            colvals <- dt[, col, with=FALSE]
             
             if(exact){
                 if(all){

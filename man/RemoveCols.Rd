@@ -36,10 +36,4 @@ A data.table such that some columns have been removed. If no columns were flagge
 The function \code{RemoveCols} helps to remove columns of a data.table, data.frame, list, 
 or generally any object with named elements efficiently with an intuitive interface
 }
-\examples{
-dt <- data.table(A = 1:5, 
-                 B = letters[1:5], 
-                 C = 5:9, 
-                 D = rep("X", 5))
-}
 

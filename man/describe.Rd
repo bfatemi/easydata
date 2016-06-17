@@ -20,6 +20,8 @@ These functions help "describe" data.tables in order to
 convient for objects of class data.table (data.frame)
 }}
 \examples{
+library(data.table)
+
 dt <- data.table(ColumnA = c(1,2,3),
                  ColumnB = c(4,5,6))
 describe(dt)

@@ -59,21 +59,21 @@ checkdt <- function(dt=NULL, cols=NULL, noerror=FALSE){
         if(noerror) 
             return(999)
         else
-            stop("no data.table provided", call. = F)
+            stop("no data.table provided", call. = FALSE)
     }
         
     if(!is.data.frame(dt)){
         if(noerror) 
             return(101)
         else
-            stop("dt not of class data.table or data.frame", call. = F)
+            stop("dt not of class data.table or data.frame", call. = FALSE)
     }
         
     if(nrow(dt)<1){
         if(noerror) 
             return(555)
         else
-            stop("no data in dt", call. = F)
+            stop("no data in dt", call. = FALSE)
     }
         
     if(!is.null(cols)){
@@ -82,7 +82,7 @@ checkdt <- function(dt=NULL, cols=NULL, noerror=FALSE){
                 return(555)
             else{
                 dne <- paste(cols[which(!cols %in% colnames(dt))], collapse = ", ")
-                stop(paste0("the following cols not in data.table: ", dne), call. = F)    
+                stop(paste0("the following cols not in data.table: ", dne), call. = FALSE)    
             }
         }
     }

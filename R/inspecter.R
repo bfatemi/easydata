@@ -4,7 +4,9 @@
 #'      get an initial view of what it contains, the size, the column 
 #'      classes, etc.
 #' @param dt A data.table to describe
-#' @examples 
+#' @examples
+#' library(data.table)
+#' 
 #' dt <- data.table(ColumnA = c(1,2,3),
 #'                  ColumnB = c(4,5,6))
 #' describe(dt)

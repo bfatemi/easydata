@@ -14,6 +14,8 @@
 #' elements determines the number of elements in the return value.
 #' @family quick wranglers
 #' @examples
+#' library(data.table)
+#' 
 #' dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
 #'                  ColB = c("a", "b", "b", "c", "c", "c", "d", "e", "f"),
 #'                  ColC = rnorm(9))
@@ -40,7 +42,7 @@ easysplit <- function(x=NULL, ll=NULL){
         names(out) <- vals
         return(out)
     }
-    ret <- sapply(cols, f, USE.NAMES = T)
+    ret <- sapply(cols, f, USE.NAMES = TRUE)
     return(ret)
 }
 

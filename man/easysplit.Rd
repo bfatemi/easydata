@@ -27,6 +27,8 @@ within a list.
 elements determines the number of elements in the return value.
 }
 \examples{
+library(data.table)
+
 dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
                  ColB = c("a", "b", "b", "c", "c", "c", "d", "e", "f"),
                  ColC = rnorm(9))
@@ -35,8 +37,5 @@ dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
 # This will return a list of three data.tables
 #
 easysplit(x=dt, list(ColA = 3:4, ColB = "c"))
-}
-\seealso{
-Other quick.wranglers: \code{\link{easyswap}}
 }
 

@@ -30,7 +30,7 @@ DateMorph <- function(dt, cols=NULL, format=NULL, tz=c("current","utc","gmt"), c
 
     # cols is not optional here (for now)
     if(is.null(cols))
-        stop("Provide column name(s) for conversion to date class", call. = F)
+        stop("Provide column name(s) for conversion to date class", call. = FALSE)
 
     # perform general checks on dt
     checkdt(dt, cols)
