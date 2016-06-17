@@ -15,4 +15,4 @@
 #'   \item{AvePeakSpeed}{FILL}
 #' }
 #' @source Leading Provider of Internet Statistics
-"broadband_Qtr"
+"broadbandQtr"

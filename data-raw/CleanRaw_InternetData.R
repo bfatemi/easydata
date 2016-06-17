@@ -30,16 +30,21 @@ setcolorder(broadband, c("CountryCode", "Year", "Quarter", cnames[-1]))
 # 
 # GDP and Internet Speed Data Merged by County and MSA
 #-----------------------------------------------------------------------------------------
-fiberGDP_County <- fread("data-raw/BEA_NTIA_merged_COUNTY.csv")
-fiberGDP_MSA    <- fread("data-raw/BEA_NTIA_merged_MSA.csv")
+fiberCountyDem <- fread("data-raw/BEA_NTIA_merged_COUNTY.csv")
+fiberMSADem    <- fread("data-raw/BEA_NTIA_merged_MSA.csv")
 
+# has nonASCII
+fiberCountyDem <- fiberCountyDem[, lapply(.SD, stringi::stri_trans_general, "latin-ascii")]
+fiberMSADem    <- fiberMSADem[, lapply(.SD, stringi::stri_trans_general, "latin-ascii")]
+
+# rename cols
 cnames_county <- c("Fips", "County", "State", "Year", "PersonalIncome_PerCap")
 cnames_msa <- c("Fips", "Year", "Area", "GDP", "GDPGrowth", "MetroAreaSize", "PersonalIncome_PerCap")
 cnames_both <- c("JobsCount", "JobsGrowth", "TYPE", "LandArea", "Population", 
                  "Households", "Income_Median", "Income_Less25", "Income_25to50", "Income_50to100",
                  "Income_100to200", "Income_greater200", "OpticalFiber", "advdl_gr1gig")
-setnames(fiberGDP_MSA, c(cnames_msa, cnames_both))
-setnames(fiberGDP_County, c(cnames_county, cnames_both))
+setnames(fiberMSADem, c(cnames_msa, cnames_both))
+setnames(fiberCountyDem, c(cnames_county, cnames_both))
 
 
 #-----------------------------------------------------------------------------------------
@@ -89,16 +94,16 @@ setkeyv(m.avePeakSpeed, c("COUNTRY", "Period"))
 
 
 DT_adoption   <- m.adopt_HighBB[m.adopt_LowBB][m.adopt_BB]
-broadband_Qtr <- DT_adoption[m.aveSpeed][m.avePeakSpeed]
+broadbandQtr <- DT_adoption[m.aveSpeed][m.avePeakSpeed]
 
 #-----------------------------------------------------------------------------------------
 # SAVE THESE DATASETS
 #-----------------------------------------------------------------------------------------
 
-devtools::use_data(broadband)
-devtools::use_data(broadband_Qtr)
-devtools::use_data(fiberGDP_MSA)
-devtools::use_data(fiberGDP_County)
+devtools::use_data(broadband, overwrite = TRUE, compress = "xz")
+devtools::use_data(broadbandQtr, overwrite = TRUE, compress = "xz")
+devtools::use_data(fiberMSADem, overwrite = TRUE, compress = "xz")
+devtools::use_data(fiberCountyDem, overwrite = TRUE, compress = "xz")
 # 
 # fwrite(broadband, "data/DT_Broadband_Q313")
 # fwrite(broadband_Qtr, "data/DT_Broadband_Qtr")

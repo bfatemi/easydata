@@ -1,14 +1,16 @@
-#' GDP and Fiber Internet Access Data, by County
+#' GDP and Fiber Internet Access Data, by MSA
 #'
-#' A dataset that contains GDP and demographic data (at the county level) from the BEA 
+#' A dataset that contains GDP and demographic data (at the MSA level) from the BEA 
 #' merged with Fiber internet adoption and access data from NTIA
 #'
 #' @format A data frame with 1,418 rows and 21 variables:
 #' \describe{
 #'   \item{Fips}{FILL}
-#'   \item{County}{FILL}
-#'   \item{State}{FILL}
 #'   \item{Year}{FILL}
+#'   \item{Area}{FILL}
+#'   \item{GDP}{FILL}
+#'   \item{GDPGrowth}{FILL}
+#'   \item{MetroAreaSize}{FILL}
 #'   \item{PersonalIncome_PerCap}{FILL}
 #'   \item{JobsCount}{FILL}
 #'   \item{JobsGrowth}{FILL}
@@ -26,4 +28,4 @@
 #'   \item{advdl_gr1gig}{FILL}
 #' }
 #' @source BEA and NTIA
-"fiberGDP_County"
+"fiberMSADem"

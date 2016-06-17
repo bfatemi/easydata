@@ -2,6 +2,11 @@
 
 [![Travis-CI Build Status](https://travis-ci.org/bfatemi/easydata.svg?branch=master)](https://travis-ci.org/bfatemi/easydata)
 
+[![Coverage Status](https://img.shields.io/codecov/c/github/bfatemi/easydata/master.svg)](https://codecov.io/github/bfatemi/easydata?branch=master)
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/easydata)](https://cran.r-project.org/package=easydata)
+
+
 easydata contains utility and helper functions aimed at making data cleaning easier. These functions try to abstract away challenges associated with R's syntax that many novice R users spend the most time struggling through, while providing a flexible interface to clean and wrangle data.
 
 ## Installation
