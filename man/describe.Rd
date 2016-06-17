@@ -20,6 +20,8 @@ These functions help "describe" data.tables in order to
 convient for objects of class data.table (data.frame)
 }}
 \examples{
+\dontrun{
+
 library(data.table)
 
 dt <- data.table(ColumnA = c(1,2,3),
@@ -30,6 +32,6 @@ describe(dt)
 #      3 obs. of 2 variables:
 #  $ ColumnA: num  1 2 3
 #  $ ColumnB: num  4 5 6
-
+}
 }
 
