@@ -14,7 +14,7 @@
 #' @param copy A boolean value indicating whether to make the swap on a COPY of the data. Default
 #'      is false and the swap is made in memory. See examples below.
 #' @return A modified copy of dt
-#' @example /examples/example-easyswap.R
+#' @example /inst/examples/example-easyswap.R
 #' @export
 easyswap <- function(dt=NULL, find=NA, swap=NULL, cols=NULL, force=FALSE, copy=FALSE){
 
