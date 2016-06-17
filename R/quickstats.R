@@ -31,8 +31,8 @@ MorphStat <- function(x, lab="Value", d=3, na.rm=TRUE){
                      Ave  = mean,
                      Min  = min,
                      Max  = max,
-                     Median = median,
-                     SD     = sd)
+                     Median = stats::median,
+                     SD     = stats::sd)
     dt <- lapply(StatFuns, function(f) round(f(x), d))
     setDT(dt)
     return(as.data.table(c(Var = lab, dt)))

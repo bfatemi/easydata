@@ -22,5 +22,5 @@
 #'      convient for objects of class data.table (data.frame)
 describe <- function(dt){
     warning("This function is deprecated", call. = FALSE)
-    str(dt, no.list = T, vec.len = 2, give.attr = FALSE, give.length = FALSE)
+    utils::str(dt, no.list = T, vec.len = 2, give.attr = FALSE, give.length = FALSE)
 }

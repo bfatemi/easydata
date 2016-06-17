@@ -12,7 +12,9 @@ Depends:
 Imports:
     data.table,
     pryr,
-    stringr
+    stringr,
+    utils,
+    stats
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
