@@ -4,6 +4,8 @@
 
 [![Coverage Status](https://img.shields.io/codecov/c/github/bfatemi/easydata/master.svg)](https://codecov.io/github/bfatemi/easydata?branch=master)
 
+[![codecov](https://codecov.io/gh/bfatemi/easydata/branch/master/graph/badge.svg)](https://codecov.io/gh/bfatemi/easydata)
+
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/easydata)](https://cran.r-project.org/package=easydata)
 
 
