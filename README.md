@@ -72,4 +72,4 @@ pclass(dt)
 ***
 
 ### Note
-Use all data cleaning tools responsibly. Understand your data deeply to ensure any transformations are doing what you think they are doing. For example, if you'd like to use the function `ClassMorph` to change all factor columns to numerics (see example below), understand why they are factors in the first place. 
+Use all data cleaning tools responsibly. Understand your data deeply to ensure any transformations are doing what you think they are doing. For example, if you'd like to use the function `ClassMorph` to change all factor columns to numerics (see example above), it's important to  understand why they are factors in the first place. 
