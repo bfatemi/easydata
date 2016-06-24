@@ -52,6 +52,8 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
 #' 
 #' @import data.table
 rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
+    if(!is.data.table(dt))
+        stop("dt argument not of class data.table", call. = FALSE)
     if(is.na(val))
         dt <- dt[Reduce("|", lapply(colnames(dt), function(i) is.na(get(i))))]
     else if(exact)
