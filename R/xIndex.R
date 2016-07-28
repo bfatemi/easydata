@@ -11,9 +11,9 @@
 #' @examples
 #' len <- 1000
 #' eachN <- 10
-#' xIndex(len, eachN) # Not simplified
-#' xIndex(len, eachN, mat = TRUE) # simplified
-xIndex <- function(len=NULL, eachN, mat=FALSE){
+#' SplitIndex(len, eachN) # Not simplified
+#' SplitIndex(len, eachN, mat = TRUE) # simplified
+SplitIndex <- function(len=NULL, eachN, mat=FALSE){
     eachLen <- len/eachN        
     
     a <- seq(1, len, by = eachLen)
@@ -21,3 +21,6 @@ xIndex <- function(len=NULL, eachN, mat=FALSE){
     
     mapply(`:`, a, b, SIMPLIFY = mat)
 }
+
+
+
