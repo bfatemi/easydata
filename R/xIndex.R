@@ -13,13 +13,31 @@
 #' eachN <- 10
 #' SplitIndex(len, eachN) # Not simplified
 #' SplitIndex(len, eachN, mat = TRUE) # simplified
-SplitIndex <- function(len=NULL, eachN, mat=FALSE){
-    eachLen <- len/eachN        
+SplitIndex <- function(totalN=NULL, eachN, mat=FALSE){
+    # totalN <- 99962
+    # eachN <- 338
+    eachLen <- totalN %/% eachN
+    remainLen <- totalN - eachN * eachLen
+    adjLen <- totalN-remainLen
     
-    a <- seq(1, len, by = eachLen)
-    b <- seq(eachLen, len, by = eachLen)
+    last <- NULL
+    if(remainLen > 0){
+        warning("eachN is not a factor of the total length of the index. 
+                Choosing closest number and last index element will be of different length")
+        last <- (adjLen + 1):(totalN)
+    }
+        
+    a <- seq(1, adjLen, by = eachLen)
+    b <- seq(eachLen, adjLen, by = eachLen)
     
-    mapply(`:`, a, b, SIMPLIFY = mat)
+    if(mat){
+        if(remainLen > 0)
+            warning("matrix will not cover total length. eachN not an integer factor")
+        return(mapply(`:`, a, b, SIMPLIFY = FALSE))
+    }else{
+        return(c(mapply(`:`, a, b, SIMPLIFY = FALSE), list(last)))
+    }
+    
 }
 
 
