@@ -14,7 +14,7 @@
 #' @example /examples/example-splice.R
 #' @export
 #' 
-#' @import data.table
+#' @importFrom data.table data.table
 splice <- function(DT=NULL, ...){
     
     slice <- sys.call() # Save call to extract subset conditions

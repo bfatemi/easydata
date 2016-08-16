@@ -7,19 +7,19 @@
 SplitIndex(totalN = NULL, eachN, mat = FALSE)
 }
 \arguments{
+\item{totalN}{A numeric value representing the total observations to split an index over}
+
 \item{eachN}{A numeric value representing the desired number of splits}
 
 \item{mat}{A boolean indicating whether to return the splits as a list or matrix (simplified)}
-
-\item{len}{A numeric value representing the total observations to split an index over}
 }
 \description{
 A function to create a split index. Comes in handy if parallelizing a computation over a very large dataset
 }
 \examples{
-len <- 1000
+totalN <- 1000
 eachN <- 10
-SplitIndex(len, eachN) # Not simplified
-SplitIndex(len, eachN, mat = TRUE) # simplified
+SplitIndex(totalN, eachN) # Not simplified
+SplitIndex(totalN, eachN, mat = TRUE) # simplified
 }
 

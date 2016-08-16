@@ -26,7 +26,7 @@
 #' condition applied through all columns. Rows such that a match is made in every column
 #' will be returned. For a less strict rule, see \code{rFilter}
 #' @export
-#' @import data.table
+#' @importFrom data.table copy
 rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
     checkdt(dt, cols)
     
@@ -50,7 +50,7 @@ rFilter_All <- function(dt, val=NA, boolfun=NULL, cols=NULL, copy=TRUE){
 #'      search will occur in order to match whether val is contained in the row
 #' @export
 #' 
-#' @import data.table
+#' @importFrom data.table is.data.table set
 rFilter <- function(dt, val=NA, exact=FALSE, set=NULL){
     if(!is.data.table(dt))
         stop("dt argument not of class data.table", call. = FALSE)
