@@ -2,17 +2,22 @@
 % Please edit documentation in R/misc.R
 \name{CleanCols}
 \alias{CleanCols}
+\alias{ddup}
 \alias{xDate}
 \title{Miscellaneous Functions}
 \usage{
 CleanCols(i)
 
 xDate(DateVector)
+
+ddup(DT, cols = NULL)
 }
 \arguments{
 \item{i}{A data table to clean}
 
 \item{DateVector}{A vector of values of class POSIXct}
+
+\item{cols}{columns of a data.table to remove duplicate rows accross}
 }
 \description{
 Miscellaneous Functions
@@ -23,5 +28,8 @@ Miscellaneous Functions
 
 \item \code{xDate}: A function to expand elements of a timestamp into 
 numerous columns in a new data.table
+
+\item \code{ddup}: A function to remove duplicates across all columns (default),
+or a given set of columns
 }}
 

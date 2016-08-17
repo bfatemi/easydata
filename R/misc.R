@@ -2,6 +2,7 @@
 #'
 #' @param i A data table to clean
 #' @param DateVector A vector of values of class POSIXct
+#' @param cols columns of a data.table to remove duplicate rows accross
 #'
 #' @describeIn CleanCols A function to remove all columns that have only NA values 
 #' @export
@@ -31,4 +32,24 @@ xDate <- function(DateVector){
         Second = lubridate::second(DateVector)
     )
     return(DateDT)
+}
+
+#' @describeIn CleanCols A function to remove duplicates across all columns (default),
+#'          or a given set of columns
+#' @export
+ddup <- function(DT, cols=NULL){
+    cDT <- copy(DT)
+    cnames <- colnames(cDT)
+    setkeyv(cDT, cnames) # set all but change if needed below
+    
+    if(!is.null(cols)){
+        # if none of cols exist - error. If some exist- warning
+        if(!any(cols %in% cnames))
+            stop("Provided names not valid columns in the data", call. = FALSE)
+        if(!all(cols %in% cnames))
+            warning("Some cols not in data. Using those that exist", call. = FALSE)
+        
+        setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
+    }
+    return(unique(cDT))
 }
