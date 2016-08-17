@@ -37,7 +37,7 @@ xDate <- function(DateVector){
 #' @describeIn CleanCols A function to remove duplicates across all columns (default),
 #'          or a given set of columns
 #' @export
-ddup <- function(DT, cols=NULL){
+ddup <- function(DT, cols=NULL, verbose=TRUE){
     cDT <- copy(DT)
     cnames <- colnames(cDT)
     setkeyv(cDT, cnames) # set all but change if needed below
@@ -51,5 +51,7 @@ ddup <- function(DT, cols=NULL){
         
         setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
     }
-    return(unique(cDT))
+    
+    sqlsauce::PrintMessage("Nrow")
+    return()
 }
