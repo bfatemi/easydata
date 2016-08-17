@@ -1,9 +1,9 @@
 #' Miscellaneous Functions
 #'
-#' @param i A data table to clean
+#' @param i A data table to clean or dedup
 #' @param DateVector A vector of values of class POSIXct
 #' @param cols columns of a data.table to remove duplicate rows accross
-#'
+#' @param verbose A boolean indicating whether to print information on the console
 #' @describeIn CleanCols A function to remove all columns that have only NA values 
 #' @export
 CleanCols <- function(i){
@@ -37,8 +37,8 @@ xDate <- function(DateVector){
 #' @describeIn CleanCols A function to remove duplicates across all columns (default),
 #'          or a given set of columns
 #' @export
-ddup <- function(DT, cols=NULL, verbose=TRUE){
-    cDT <- copy(DT)
+ddup <- function(i, cols=NULL, verbose=TRUE){
+    cDT <- copy(i)
     cnames <- colnames(cDT)
     setkeyv(cDT, cnames) # set all but change if needed below
     
@@ -52,6 +52,7 @@ ddup <- function(DT, cols=NULL, verbose=TRUE){
         setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
     }
     
-    sqlsauce::PrintMessage("Nrow")
-    return()
+    del <- nrow(i) - nrow(cDT)
+    fubaR::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(i), " rows"))
+    return(cDT)
 }

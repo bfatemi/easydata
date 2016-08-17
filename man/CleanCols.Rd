@@ -10,14 +10,16 @@ CleanCols(i)
 
 xDate(DateVector)
 
-ddup(DT, cols = NULL)
+ddup(i, cols = NULL, verbose = TRUE)
 }
 \arguments{
-\item{i}{A data table to clean}
+\item{i}{A data table to clean or dedup}
 
 \item{DateVector}{A vector of values of class POSIXct}
 
 \item{cols}{columns of a data.table to remove duplicate rows accross}
+
+\item{verbose}{A boolean indicating whether to print information on the console}
 }
 \description{
 Miscellaneous Functions
