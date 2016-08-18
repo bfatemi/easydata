@@ -54,8 +54,11 @@ ClassMorph <- function(dt,
     # trace how NAs are/could be generated and return error. recommend to 
     # rerun with force=TRUE
     # ERROR WITH FACTOR TO INTEGER. NO CONVERSION TO CHARACTER FIRST
-    if(!old %in% sapply(dt, class))
-        stop("No columns of class specified with the argument 'old'", call. = FALSE)
+    if(!old %in% sapply(dt, class)){
+        warning("No columns of class specified with the argument 'old'", call. = FALSE)
+        return(NULL)
+    }
+        
     
     old <- match.arg(old) # Capture args
     new <- match.arg(new)
