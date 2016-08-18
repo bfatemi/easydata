@@ -15,14 +15,16 @@ Imports:
     pryr,
     stringr,
     utils,
-    stats,
-    fubaR
+    stats
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
     testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    fubaR
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
+Remotes:
+    bfatemi/fubaR

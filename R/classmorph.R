@@ -59,7 +59,6 @@ ClassMorph <- function(dt,
         return(NULL)
     }
         
-    
     old <- match.arg(old) # Capture args
     new <- match.arg(new)
     
