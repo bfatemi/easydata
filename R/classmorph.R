@@ -49,6 +49,9 @@ ClassMorph <- function(dt,
                        copy  = FALSE,
                        force = FALSE){
     
+    if(!data.table::is.data.table(dt))
+        stop("Data should be class data.table. Use 'as.data.table'", call. = FALSE)
+    
     
     # NEED TO IMPLEMENT force
     # trace how NAs are/could be generated and return error. recommend to 
@@ -137,6 +140,10 @@ ClassMorph <- function(dt,
     
     # reset column orders
     setcolorder(cdt, colorder)
+    
+    # ensure it was completed
+    # if(old %in% sapply(cdt, class))
+    #     stop("oops... something went wrong in ClassMorph")
     
     return(cdt)
 }
