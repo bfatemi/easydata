@@ -151,11 +151,9 @@ ClassMorph <- function(dt,
 NumMorph <- function(dt, cols=NULL, copy=FALSE, verbose=FALSE){
     checkdt(dt, cols)
 
-    if(copy)
-        dt <- copy(dt)
+    if(copy) dt <- copy(dt)
     
-    if(is.null(cols))
-        cols <- names(dt)
+    if(is.null(cols)) cols <- names(dt)
     
     # recursive function to catch warning if value generated error, and skip the column
     f <- function(i){

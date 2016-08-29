@@ -23,8 +23,8 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    fubaR
+    fubar
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 Remotes:
-    bfatemi/fubaR
+    bfatemi/fubar
