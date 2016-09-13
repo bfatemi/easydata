@@ -5,11 +5,14 @@
 \alias{RoundCols}
 \alias{dataclean}
 \alias{ddup}
+\alias{narm_c}
 \alias{p_setcolorder}
 \alias{xDate}
 \title{Functions to help with Data Cleaning}
 \usage{
 CleanCols(i)
+
+narm_c(i = NULL, cols = NULL)
 
 RoundCols(i, digits = 2, igncols = NULL, cols = NULL, b_skip = FALSE,
   b_copy = TRUE)
@@ -23,11 +26,11 @@ ddup(i, cols = NULL, verbose = TRUE)
 \arguments{
 \item{i}{A data table to operate on}
 
+\item{cols}{columns of a data.table to remove duplicate rows accross}
+
 \item{digits}{A numeric indicating the number of digits to round in \code{RoundCols}}
 
 \item{igncols}{A character vector indicating which columns to ignore}
-
-\item{cols}{columns of a data.table to remove duplicate rows accross}
 
 \item{b_skip}{A boolean indicating whether to skip non-numeric columns that \code{RoundCols} encounters}
 
@@ -46,6 +49,8 @@ Functions to help with Data Cleaning
 \section{Functions}{
 \itemize{
 \item \code{CleanCols}: A function to remove all columns that have only NA values
+
+\item \code{narm_c}: A function to remove na rows in specified columes
 
 \item \code{RoundCols}: A convienience wrapper for \code{round} that applies to all or a subset of cols
 

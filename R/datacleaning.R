@@ -18,6 +18,16 @@ CleanCols <- function(i){
     i[, sapply(i, f), with=FALSE]
 }
 
+#' @describeIn dataclean A function to remove na rows in specified columes
+#' @export
+narm_c <- function(i = NULL, cols=NULL){
+    if(!data.table::is.data.table(i))
+        stop("i must be a data.table", call. = FALSE)
+    
+    e <- substitute(!is.na(get(X)))
+    i[eval(e, list(X = cols))]
+}
+
 #' @param digits A numeric indicating the number of digits to round in \code{RoundCols}
 #' @param igncols A character vector indicating which columns to ignore 
 #' @param b_skip A boolean indicating whether to skip non-numeric columns that \code{RoundCols} encounters
