@@ -145,7 +145,7 @@ ClassMorph <- function(dt,
     if(old %in% sapply(cdt, class))
         stop("oops... something went wrong in ClassMorph")
     
-    return(cdt)
+    return(cdt[])
 }
 
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
