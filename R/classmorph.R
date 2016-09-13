@@ -48,7 +48,7 @@ ClassMorph <- function(dt,
                        new   = c("factor","integer","character","numeric"),
                        copy  = FALSE,
                        force = FALSE){
-    
+    # print("test")
     if(!data.table::is.data.table(dt))
         stop("Data should be class data.table. Use 'as.data.table'", call. = FALSE)
     
@@ -71,7 +71,7 @@ ClassMorph <- function(dt,
     cdt <- dt
     if(copy) 
         cdt <- copy(dt)
-    
+    # print(head(cdt))
     # Get all pairs and id those that require indirect conversion
     # E.g.  direct:   factor -> numeric
     #       indirect: factor -> character -> numeric
@@ -97,7 +97,7 @@ ClassMorph <- function(dt,
     # Get position of cols to convert
     cols <- which(sapply(cdt, class) == old)
     
-    
+    # print(cols)
     # For each col, evaluate call & set new
     if(new == "character"){
         navector <- rep(NA_character_, nrow(cdt))
@@ -142,8 +142,8 @@ ClassMorph <- function(dt,
     setcolorder(cdt, colorder)
     
     # ensure it was completed
-    # if(old %in% sapply(cdt, class))
-    #     stop("oops... something went wrong in ClassMorph")
+    if(old %in% sapply(cdt, class))
+        stop("oops... something went wrong in ClassMorph")
     
     return(cdt)
 }
