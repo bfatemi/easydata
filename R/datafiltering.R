@@ -5,7 +5,7 @@
 #' @param cols columns of a data.table to focus the operation on
 #' @param value In the case of booleanize, a value to look for throughout the table
 #' @param not A boolean. Negates the output of \code{booleanize}
-#' @param index In the case of \Code{CleanRows}, if \code{index} is TRUE, 
+#' @param index In the case of \code{CleanRows}, if \code{index} is TRUE, 
 #'      an Index column will be created to track which rows were removed
 #' @param verbose A boolean indicating whether to print information on the console
 #' @example inst/examples/ex-cleaning.R
@@ -51,8 +51,8 @@ ddup <- function(DT, cols=NULL, verbose=TRUE){
         setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
     }
     
-    del <- nrow(i) - nrow(cDT)
-    fubar::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(i), " rows"))
+    del <- nrow(DT) - nrow(cDT)
+    fubar::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(DT), " rows"))
     return(cDT)
 }
 
@@ -132,15 +132,15 @@ p_setcolorder <- function(DT, cols=NULL, aslast=TRUE){
     if(is.null(cols))
         stop("provide a vector of column names to set order")
     
-    cnam <- colnames(i)
+    cnam <- colnames(DT)
     othercols <- cnam[!cnam %in% cols] 
     
     if(aslast)
-        setcolorder(i, c(othercols, cols))
+        setcolorder(DT, c(othercols, cols))
     else
-        setcolorder(i, c(cols, othercols))
+        setcolorder(DT, c(cols, othercols))
     
-    content <- paste0(1:length(colnames(i)), ". ", colnames(i), collapse = "\n")
+    content <- paste0(1:length(colnames(DT)), ". ", colnames(DT), collapse = "\n")
     fubar::PrintMessage("New column order set", content = content)
 }
 

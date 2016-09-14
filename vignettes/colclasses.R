@@ -12,24 +12,24 @@ dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
 dt
 
 # print column classes
-pclass(dt) 
+cc(dt) 
 
 ## ---- error=TRUE---------------------------------------------------------
 ClassMorph(dt, "factor", "integer") #results in ERROR
 
 ## ------------------------------------------------------------------------
 ClassMorph(dt, "factor", "integer", force = TRUE) # no error
-pclass(dt)
+cc(dt)
 
 ## ---- results='hold'-----------------------------------------------------
 newdt <- ClassMorph(dt, "numeric", "factor", copy = TRUE)
 
 identical(cc(dt), cc(newdt))    # classes are not equal
-pclass(dt)                      # confirm correct conversion
-pclass(newdt)
+cc(dt)                      # confirm correct conversion
+cc(newdt)
 
 ## ---- results='hold'-----------------------------------------------------
-pclass(dt)
+cc(dt)
 newdt <- ClassMorph(dt, "numeric", "factor")
 
 identical(cc(dt), cc(newdt))

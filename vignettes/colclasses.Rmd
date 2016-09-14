@@ -25,7 +25,7 @@ dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
 dt
 
 # print column classes
-pclass(dt) 
+cc(dt) 
 ```
 
 ### Errors when generating NA
@@ -46,7 +46,7 @@ Naturally, when converting "garbage" to an integer, you will get an NA. To preve
 
 ```{r}
 ClassMorph(dt, "factor", "integer", force = TRUE) # no error
-pclass(dt)
+cc(dt)
 ```
 
 
@@ -59,14 +59,14 @@ manually delete the old table.
 newdt <- ClassMorph(dt, "numeric", "factor", copy = TRUE)
 
 identical(cc(dt), cc(newdt))    # classes are not equal
-pclass(dt)                      # confirm correct conversion
-pclass(newdt)
+cc(dt)                      # confirm correct conversion
+cc(newdt)
 ```
 
 > IMPORTANT: without specifying 'copy=TRUE', newdt is simply just pointing to dt. See demonstration of this below.
 
 ```{r, results='hold'}
-pclass(dt)
+cc(dt)
 newdt <- ClassMorph(dt, "numeric", "factor")
 
 identical(cc(dt), cc(newdt))

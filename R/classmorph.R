@@ -61,7 +61,7 @@ ClassMorph <- function(DT,
     # ERROR WITH FACTOR TO INTEGER. NO CONVERSION TO CHARACTER FIRST
     if(!old %in% sapply(DT, class)){
         warning("No columns of class specified with the argument 'old'", call. = FALSE)
-        return(DT)
+        return(DT[])
     }
 
     colK <- quote(DT[[k]])
@@ -182,7 +182,7 @@ ClassMorph <- function(DT,
 #' 
 #' @import data.table
 NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
-    checkdt(DT, cols)
+    # checkdt(DT, cols)
 
     if(copy) DT <- copy(DT)
     

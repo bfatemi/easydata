@@ -69,7 +69,8 @@ bDT <- Booleanize(DT, value = 1)
 # I avoid associating NAs with a valid entry to test against
 #
 # swaps out NA for FALSE by reference Set copy = TRUE to operate on a copy of the data
-easyswap(bDT, swap = "f")               # error bc "f" is not the same type as the col
+
+#easyswap(bDT, swap = "f")               # error bc "f" is not the same type as the col
 easyswap(bDT, swap = "f", force = TRUE) # forces the col class to be same class as swap arg
 
 cc(bDT)
