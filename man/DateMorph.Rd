@@ -10,15 +10,15 @@ DateMorph(dt, cols = NULL, format = NULL, tz = c("current", "utc", "gmt"),
 \arguments{
 \item{dt}{A data.table to morph column classes}
 
-\item{cols}{An optional character vector of column names to operate on.
-Not applicable for function ClassMorph.}
+\item{cols}{An optional character vector of column names to operate on. Not
+applicable for function ClassMorph.}
 
 \item{format}{Format of the value to convert to date. See examples for acceptable formats.}
 
 \item{tz}{A character value indicating the timezone. Options are: "current", "utc", and "gmt"}
 
-\item{copy}{A boolean value indicating whether to alter \code{dt} in memory or 
-whether to return a new (copy) of the input data.table.}
+\item{copy}{A boolean value indicating whether to alter \code{dt} in memory
+or whether to return a new (copy) of the input data.table.}
 }
 \description{
 The functions \code{\link{ClassMorph}}, and \code{\link{NumMorph}}, in addition to \code{DateMorph},

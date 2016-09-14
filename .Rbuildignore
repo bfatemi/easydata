@@ -4,3 +4,4 @@
 ^development
 ^\.travis\.yml$
 ^data-raw$
+^old$

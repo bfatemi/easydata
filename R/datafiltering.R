@@ -1,31 +1,77 @@
 #' Functions to help with Data Cleaning
 #'
-#' @param i A data table to operate on
+#' @param DT A data table to operate on
 #' @param date_vec A vector of values of class POSIXct
-#' @param cols columns of a data.table to remove duplicate rows accross
+#' @param cols columns of a data.table to focus the operation on
+#' @param value In the case of booleanize, a value to look for throughout the table
+#' @param not A boolean. Negates the output of \code{booleanize}
+#' @param index In the case of \Code{CleanRows}, if \code{index} is TRUE, 
+#'      an Index column will be created to track which rows were removed
 #' @param verbose A boolean indicating whether to print information on the console
+#' @example inst/examples/ex-cleaning.R
 #' @name dataclean
 NULL
 
-#' @describeIn dataclean A function to remove all columns that have only NA values 
+#' @describeIn dataclean A function to remove all columns that have ONLY NA values 
 #' @export
-CleanCols <- function(i){
+CleanCols <- function(DT){
     f <- function(c){
         if(sum(is.na(c)) == length(c))
             return(FALSE)
         return(TRUE)
     }
-    i[, sapply(i, f), with=FALSE]
+    DT[, sapply(DT, f), with=FALSE]
 }
 
 #' @describeIn dataclean A function to remove na rows in specified columes
 #' @export
-narm_c <- function(i = NULL, cols=NULL){
-    if(!data.table::is.data.table(i))
-        stop("i must be a data.table", call. = FALSE)
+CleanRows <- function(DT, cols = NULL, index = FALSE){
+    DT <- CleanCols(DT)
+    if(index) DT[, Ind := .I]
+    if(is.null(cols)) cols <- colnames(DT)
     
-    e <- substitute(!is.na(get(X)))
-    i[eval(e, list(X = cols))]
+    DT[Reduce("&", Booleanize(DT, cols, NA, TRUE))]
+}
+
+#' @describeIn dataclean A function to remove duplicates across all columns (default),
+#'          or a given set of columns
+#' @export
+ddup <- function(DT, cols=NULL, verbose=TRUE){
+    cDT <- copy(DT)
+    cnames <- colnames(cDT)
+    setkeyv(cDT, cnames) # set all but change if needed below
+    
+    if(!is.null(cols)){
+        # if none of cols exist - error. If some exist- warning
+        if(!any(cols %in% cnames))
+            stop("Provided names not valid columns in the data", call. = FALSE)
+        if(!all(cols %in% cnames))
+            warning("Some cols not in data. Using those that exist", call. = FALSE)
+        
+        setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
+    }
+    
+    del <- nrow(i) - nrow(cDT)
+    fubar::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(i), " rows"))
+    return(cDT)
+}
+
+
+#' @describeIn dataclean A function that turns a data.table into all logical values based on finding the value arg
+#'      in all or selected columns
+#' @export
+Booleanize <- function(DT=NULL, cols=NULL, value=NULL, not=FALSE){
+    if(is.null(value)) stop("function needs value argument")
+    if(!is.data.table(DT)) stop("DT must be of class data.table")
+    if(is.null(cols)) cols <- colnames(DT)
+    
+    if(is.na(value))
+        e <- substitute(is.na(get(i, DT)))
+    else 
+        e <- substitute(get(i, DT) == value)
+    
+    if(not) DT[, sapply(cols, function(i) !eval(e), simplify = FALSE)]
+    else DT[, sapply(cols, function(i) eval(e), simplify = FALSE)]
 }
 
 #' @param digits A numeric indicating the number of digits to round in \code{RoundCols}
@@ -34,10 +80,10 @@ narm_c <- function(i = NULL, cols=NULL){
 #' @param b_copy A boolean indicating whether to make a copy of the data, or operate on by reference
 #' @describeIn dataclean A convienience wrapper for \code{round} that applies to all or a subset of cols
 #' @export
-RoundCols <- function(i, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE, b_copy=TRUE){
+RoundCols <- function(DT, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE, b_copy=TRUE){
     # digits = 2
     # igncols = c("SummaryGrp", "NumObs_tn")
-    dat <- data.table::copy(i)
+    dat <- data.table::copy(DT)
     
     # ADD THIS FUNCTIONALITY (recursive call if copy = TRUE)
     # if(copy){
@@ -82,7 +128,7 @@ RoundCols <- function(i, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE, 
 #' @describeIn dataclean A convienience wrapper for \code{data.table::setcolorder} that makes it easy 
 #'      set the order of a subset of columns
 #' @export
-p_setcolorder <- function(i, cols=NULL, aslast=TRUE){
+p_setcolorder <- function(DT, cols=NULL, aslast=TRUE){
     if(is.null(cols))
         stop("provide a vector of column names to set order")
     
@@ -118,25 +164,3 @@ xDate <- function(date_vec){
     return(DateDT)
 }
 
-#' @describeIn dataclean A function to remove duplicates across all columns (default),
-#'          or a given set of columns
-#' @export
-ddup <- function(i, cols=NULL, verbose=TRUE){
-    cDT <- copy(i)
-    cnames <- colnames(cDT)
-    setkeyv(cDT, cnames) # set all but change if needed below
-    
-    if(!is.null(cols)){
-        # if none of cols exist - error. If some exist- warning
-        if(!any(cols %in% cnames))
-            stop("Provided names not valid columns in the data", call. = FALSE)
-        if(!all(cols %in% cnames))
-            warning("Some cols not in data. Using those that exist", call. = FALSE)
-        
-        setkeyv(cDT, cols[which(cols %in% cnames)]) # will capture all if warning is not relevent
-    }
-    
-    del <- nrow(i) - nrow(cDT)
-    fubar::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(i), " rows"))
-    return(cDT)
-}

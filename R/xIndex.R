@@ -50,4 +50,3 @@ splitn <- function(vec, n){
 }
 
 
-# devtools::check(force_suggests = FALSE)

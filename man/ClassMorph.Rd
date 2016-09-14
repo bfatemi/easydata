@@ -7,8 +7,8 @@
 \alias{pclass}
 \title{Functions to Change Column Classes}
 \usage{
-ClassMorph(dt, old = c("factor", "integer", "character", "numeric",
-  "logical"), new = c("factor", "integer", "character", "numeric"),
+ClassMorph(DT, old = c("factor", "integer", "character", "numeric", "logical",
+  "Date"), new = c("factor", "integer", "character", "numeric"),
   copy = FALSE, force = FALSE)
 
 NumMorph(dt, cols = NULL, copy = FALSE, verbose = FALSE)
@@ -18,39 +18,41 @@ pclass(dt)
 cc(dt)
 }
 \arguments{
-\item{dt}{A data.table to use for any "class" operations}
+\item{DT}{A data.table to use for any "class" operations}
 
-\item{old}{ClassMorph only. A column type, specified as a character value, to detect
-and convert to the class specified by 'new'}
+\item{old}{ClassMorph only. A column type, specified as a character value, to
+detect and convert to the class specified by 'new'}
 
-\item{new}{ClassMorph only. A column type, specified as a character value, to 
+\item{new}{ClassMorph only. A column type, specified as a character value, to
 convert all columns of the class specified by 'old' to.}
 
-\item{copy}{A boolean value indicating whether to alter \code{dt} in memory or 
-whether to return a new (copy) of the input data.table.}
+\item{copy}{A boolean value indicating whether to alter \code{dt} in memory
+or whether to return a new (copy) of the input data.table.}
 
-\item{force}{A boolean indicating whether to force conversion from class factor
-to class numeric despite NAs being generated.}
+\item{force}{A boolean indicating whether to force conversion from class
+factor to class numeric despite NAs being generated.}
 
-\item{cols}{An optional character vector of column names to operate on.
-Not applicable for function ClassMorph.}
+\item{cols}{An optional character vector of column names to operate on. Not
+applicable for function ClassMorph.}
 
 \item{verbose}{A boolean indicating whether to be chatty}
 }
 \value{
-Returns a data.table that is either a copy of the input dt that 
-     has been modified, or the same input dt that has been modified in memory
+Returns a data.table that is either a copy of the input dt that has
+  been modified, or the same input dt that has been modified in memory
 }
 \description{
-The functions \code{ClassMorph}, and \code{NumMorph}, in addition to \code{DateMorph},
-are functions designed to make dealing with column classes easy. See examples for how
-to avoid uncessary frustrations related to unexpected column classes or date formats.
+The functions \code{ClassMorph}, and \code{NumMorph}, in addition to
+\code{DateMorph}, are functions designed to make dealing with column classes
+easy. See examples for how to avoid uncessary frustrations related to
+unexpected column classes or date formats.
 }
 \details{
-This function takes care of multiple conversion steps that are sometimes needed to avoid 
-data loss or unexpected results (e.g. a factor that "looks" like the number "1" may 
-not convert to a \code{numeric} "1". To get around this common frustration, this function
-will perform an indirect conversion to \code{character} before converting to \code{numeric})
+This function takes care of multiple conversion steps that are sometimes
+needed to avoid data loss or unexpected results (e.g. a factor that "looks"
+like the number "1" may not convert to a \code{numeric} "1". To get around
+this common frustration, this function will perform an indirect conversion to
+\code{character} before converting to \code{numeric})
 }
 \section{Functions}{
 \itemize{
@@ -70,16 +72,36 @@ instead of simply printing to the console
 #-------------------------------------------------------------------------------------
 # Example: Change column classes in batch
 #-------------------------------------------------------------------------------------
+
 library(data.table)
-dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
+DT <- data.table(A = as.factor(c(1:2, "-", 4:5)),
                  B = rep(2.0, 5),
                  C = as.factor(c(1, "garbage", 2, "", 3)),
                  D = as.factor(rep(999, 5)),
                  E = letters[1:5],
                  F = rep("2020-01-22", 5))
 
-ClassMorph(dt, "factor", "integer", force = TRUE) # no error
-pclass(dt)
 
+# > DT
+#    A B       C   D E          F
+# 1: 1 2       1 999 a 2020-01-22
+# 2: 2 2 garbage 999 b 2020-01-22
+# 3: - 2       2 999 c 2020-01-22
+# 4: 4 2         999 d 2020-01-22
+# 5: 5 2       3 999 e 2020-01-22
+
+
+ClassMorph(DT, "factor", "integer", force = TRUE) # no error
+
+# Note that this converted by reference. To make copy of data in mem, 
+# set copy = TRUE
+
+DT
+#     A B  C   D E          F
+# 1:  1 2  1 999 a 2020-01-22
+# 2:  2 2 NA 999 b 2020-01-22
+# 3: NA 2  2 999 c 2020-01-22
+# 4:  4 2 NA 999 d 2020-01-22
+# 5:  5 2  3 999 e 2020-01-22
 }
 
