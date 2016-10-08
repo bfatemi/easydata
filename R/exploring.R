@@ -41,4 +41,4 @@ dtDescribe <- function(DT, all=FALSE, cols=NULL){
     return(ccdt[])
 }
 
-globalVariables(c("CountUnique", "CName", "Class"))
+globalVariables(c("CountUnique", "CName", "Class", "DateRange"))
