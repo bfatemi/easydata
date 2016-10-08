@@ -178,5 +178,6 @@ easyswap(bDT,
 pcc(iris)                       # print sorted by ord (default)
 pcc(iris, "Class")              # print sorted by "Class"
 pcc(iris, "CName", bret = TRUE) # sort and return data.table
+
 }
 

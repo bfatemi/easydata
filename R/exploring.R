@@ -1,5 +1,7 @@
 #' Functions to help with pre-data exploration
-#'
+#' 
+#' Helper functions to assist with basic data exploration tasks.
+#' 
 #' @param DT A data.table  
 #' @param all Boolean indicating whether to perform for all columns (default is FALSE). If 
 #'      this is false and optional argument "cols" was also not provided, the default behavior 
@@ -21,13 +23,22 @@ dtDescribe <- function(DT, all=FALSE, cols=NULL){
         ccdt[, CountUnique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
     }
     else{
-        e <- Class %in% c("factor", "character")
+        e <- substitute(Class %in% c("factor", "character"))
         cols <- ccdt[eval(e), CName]
         
         if(length(cols) == 0) 
             stop("cols not in DT")
         
-        ccdt[eval(e), CountUnique := sapply(cols, function(i) length(unique(DT[, "PortType", with=FALSE])))]
+        ccdt[eval(e), CountUnique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
     }
-    return(ccdt)
+    
+    datecols <- ccdt[Class == "Date", CName]
+    if(length(datecols) > 0){
+        for(d in datecols)
+            ccdt[CName == d, DateRange := paste0(min(DT[, get(d)]), ":", max(DT[, get(d)]))]
+    }
+        
+    return(ccdt[])
 }
+
+globalVariables(c("CountUnique", "CName", "Class"))
