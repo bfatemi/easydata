@@ -210,3 +210,31 @@ NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
 cc <- function(DT){
     sapply(DT, class)
 }
+
+
+#' @describeIn ClassMorph prints (default) or returns a data.table describing column classes
+#' @param ord For convenience, an optional char vec indicating how to sort rows. Can be one 
+#'          of: "CName", "Class", or "Pos" (position)
+#' @param bret A boolean indicating whether to return the data.table (rather than print by default)
+#' @import data.table
+#' @export
+#' 
+#' @examples
+#' pcc(iris)                       # print sorted by ord (default)
+#' pcc(iris, "Class")              # print sorted by "Class"
+#' pcc(iris, "CName", bret = TRUE) # sort and return data.table
+pcc <- function(DT, ord=NULL, bret=FALSE){
+    r <- cc(DT)
+    rdt <- data.table(CName = names(r), Class = r, Pos = 1:length(r))
+    
+    if(!is.null(ord)){
+        ord <- match.arg(ord, choices = c("CName", "Class", "Pos"))
+        setorderv(rdt, ord)
+    } 
+    if(bret) return(rdt)
+    print(rdt, row.names = FALSE)
+}
+
+
+
+
