@@ -24,19 +24,21 @@ dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     ## count of NAs per columns
     ##
     cols <- ccdt[, CName]        # get colnames of DT to describe
-    ccdt[, countUnique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
-    ccdt[, countNA     := lapply(cols, function(i) sum(is.na(DT[, get(i)])))]
+    ccdt[, count_narm   := sapply(cols, function(i) nrow(DT[!is.na(get(i))]))]
+    ccdt[, count_na     := nrow(DT) - count_narm]
+    ccdt[, count_unique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
+    
         
     ## date range of date class columns
     ##
     dcols <- ccdt[Class == "Date", CName]   # get date columns if any
     if(length(dcols) > 0){
         for(d in dcols)
-            ccdt[CName == d, rangeDate := paste0("(", min(DT[, get(d)]), "):(", max(DT[, get(d)]), ")")]
+            ccdt[CName == d, range_date := paste0("(", min(DT[, get(d)]), "):(", max(DT[, get(d)]), ")")]
     }
     return(ccdt[])
 }
 
-globalVariables(c("countUnique", "CName", "Class", "rangeDate", "countNA"))
+globalVariables(c("count_unique", "count_na", "count_narm", "CName", "Class", "range_date"))
 
 
