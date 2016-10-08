@@ -7,38 +7,36 @@
 #'      this is false and optional argument "cols" was also not provided, the default behavior 
 #'      is to perform this for only factor and character column classes in DT
 #' @param cols optional arg providing column names to operate on
+#' @param cclass Not implemented. Useful if desiring to describe all columns a particular class
+#' @param FUN NI; provide function to apply over cols (if provided)
 #'
 #' @return A descriptive data.table
 #' @export
 #'
 #' @examples
-#' # dtDescribe(DT)
-dtDescribe <- function(DT, all=FALSE, cols=NULL){
-    ccdt <- pcc(DT, bret = TRUE)
+#' dtDescribe(as.data.table(iris))
+dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
+    if(!is.data.table(DT)) stop("DT should be data.table class")
     
-    if(all){
-        ccdt[, CountUnique := sapply(CName, function(i) length(unique(DT[, get(i)])))]
-    }
-    else if(!is.null(cols)){
-        ccdt[, CountUnique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
-    }
-    else{
-        e <- substitute(Class %in% c("factor", "character"))
-        cols <- ccdt[eval(e), CName]
-        
-        if(length(cols) == 0) 
-            stop("cols not in DT")
-        
-        ccdt[eval(e), CountUnique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
-    }
+    ccdt <- pcc(DT, bret = TRUE) # start the descriptive table
     
-    datecols <- ccdt[Class == "Date", CName]
-    if(length(datecols) > 0){
-        for(d in datecols)
-            ccdt[CName == d, DateRange := paste0(min(DT[, get(d)]), ":", max(DT[, get(d)]))]
-    }
+    ## count of unique values
+    ## count of NAs per columns
+    ##
+    cols <- ccdt[, CName]        # get colnames of DT to describe
+    ccdt[, countUnique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
+    ccdt[, countNA     := lapply(cols, function(i) sum(is.na(DT[, get(i)])))]
         
+    ## date range of date class columns
+    ##
+    dcols <- ccdt[Class == "Date", CName]   # get date columns if any
+    if(length(dcols) > 0){
+        for(d in dcols)
+            ccdt[CName == d, rangeDate := paste0("(", min(DT[, get(d)]), "):(", max(DT[, get(d)]), ")")]
+    }
     return(ccdt[])
 }
 
-globalVariables(c("CountUnique", "CName", "Class", "DateRange"))
+globalVariables(c("countUnique", "CName", "Class", "rangeDate", "countNA"))
+
+
