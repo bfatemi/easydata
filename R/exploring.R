@@ -23,8 +23,9 @@ dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     ## count of unique values
     ## count of NAs per columns
     ##
-    cols <- ccdt[, CName]        # get colnames of DT to describe
-    ccdt[, count_narm   := sapply(cols, function(i) nrow(DT[!is.na(get(i))]))]
+    cols <- ccdt[, CName]   # get colnames of DT to describe
+    
+    ccdt[, count_narm   := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
     ccdt[, count_na     := nrow(DT) - count_narm]
     ccdt[, count_unique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
     
