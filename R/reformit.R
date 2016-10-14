@@ -1,6 +1,6 @@
 #' Construct formula
 #' 
-#' A helper to build a formula
+#' A helper to build a formula.
 #'
 #' @param lhs Character vector
 #' @param rhs Character vector

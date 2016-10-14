@@ -12,6 +12,6 @@ reformit(lhs, rhs)
 \item{rhs}{Character vector}
 }
 \description{
-A helper to build a formula
+A helper to build a formula.
 }
 
