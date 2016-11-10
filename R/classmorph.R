@@ -22,16 +22,16 @@
 #'   or whether to return a new (copy) of the input data.table.
 #' @param force A boolean indicating whether to force conversion from class
 #'   factor to class numeric despite NAs being generated.
+#' @param verbose A boolean indicating whether to be chatty
 #' @return Returns a data.table that is either a copy of the input DT that has
 #'   been modified, or the same input DT that has been modified in memory
-#' @example inst/examples/ex-cleaning.R
-#' 
 #' @export
 #' @describeIn ClassMorph A function to convert all columns of class "old" to class "new". This
 #' function handles the indirect conversions sometimes needed to avoid data loss or
 #' unexpected results (see details).
 #' 
 #' @import data.table
+#' @example inst/examples/ex-cleaning.R
 ClassMorph <- function(DT,
                        old   = c("factor","integer","character","numeric","logical", "Date"),
                        new   = c("factor","integer","character","numeric"),
@@ -85,10 +85,7 @@ ClassMorph <- function(DT,
 
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
 #'      DT, where a conversion to numeric would not generate NA values. 
-#' 
-#' @param verbose A boolean indicating whether to be chatty
 #' @export
-#' 
 #' @import data.table
 NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
     # checkdt(DT, cols)
@@ -119,3 +116,32 @@ NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
 cc <- function(DT){
     sapply(DT, class)
 }
+
+
+#' @describeIn ClassMorph prints (default) or returns a data.table describing column classes
+#' @param ord For convenience, an optional char vec indicating how to sort rows. Can be one 
+#'          of: "CName", "Class", or "Pos" (position)
+#' @param bret A boolean indicating whether to return the data.table (rather than print by default)
+#' @import data.table
+#' @export
+#' 
+#' @examples
+#' pcc(iris)                       # print sorted by ord (default)
+#' pcc(iris, "Class")              # print sorted by "Class"
+#' pcc(iris, "CName", bret = TRUE) # sort and return data.table
+#' 
+pcc <- function(DT, ord=NULL, bret=FALSE){
+    r <- cc(DT)
+    rdt <- data.table(CName = names(r), Class = r, Pos = 1:length(r))
+    
+    if(!is.null(ord)){
+        ord <- match.arg(ord, choices = c("CName", "Class", "Pos"))
+        setorderv(rdt, ord)
+    } 
+    if(bret) return(rdt)
+    print(rdt, row.names = FALSE)
+}
+
+
+
+

@@ -4,6 +4,7 @@
 \alias{ClassMorph}
 \alias{NumMorph}
 \alias{cc}
+\alias{pcc}
 \title{Functions to Change Column Classes}
 \usage{
 ClassMorph(DT, old = c("factor", "integer", "character", "numeric", "logical",
@@ -13,6 +14,8 @@ ClassMorph(DT, old = c("factor", "integer", "character", "numeric", "logical",
 NumMorph(DT, cols = NULL, copy = FALSE, verbose = FALSE)
 
 cc(DT)
+
+pcc(DT, ord = NULL, bret = FALSE)
 }
 \arguments{
 \item{DT}{A data.table to use for any "class" operations}
@@ -33,6 +36,11 @@ factor to class numeric despite NAs being generated.}
 applicable for function ClassMorph.}
 
 \item{verbose}{A boolean indicating whether to be chatty}
+
+\item{ord}{For convenience, an optional char vec indicating how to sort rows. Can be one 
+of: "CName", "Class", or "Pos" (position)}
+
+\item{bret}{A boolean indicating whether to return the data.table (rather than print by default)}
 }
 \value{
 Returns a data.table that is either a copy of the input DT that has
@@ -61,6 +69,8 @@ unexpected results (see details).
 DT, where a conversion to numeric would not generate NA values.
 
 \item \code{cc}: returns column classes
+
+\item \code{pcc}: prints (default) or returns a data.table describing column classes
 }}
 \examples{
 # Examples of: ClassMorph, cc, CleanCols, CleanRows, easyswap, Booleanize
@@ -164,6 +174,10 @@ easyswap(bDT,
 # 3:     f FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 # 4: FALSE FALSE     f FALSE FALSE FALSE FALSE FALSE
 # 5: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+
+pcc(iris)                       # print sorted by ord (default)
+pcc(iris, "Class")              # print sorted by "Class"
+pcc(iris, "CName", bret = TRUE) # sort and return data.table
 
 }
 
