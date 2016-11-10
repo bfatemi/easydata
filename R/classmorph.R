@@ -37,19 +37,11 @@ ClassMorph <- function(DT,
                        new   = c("factor","integer","character","numeric"),
                        copy  = FALSE,
                        force = FALSE){
+    
     old <- match.arg(old) # Capture args
     new <- match.arg(new)
     
     if(copy) DT <- copy(DT)
-    
-    # DT <- data.table(iris)
-    # copy <- FALSE
-    # force <- FALSE
-    # DT[, Sepal.Length := as.factor(as.integer(Sepal.Length))]
-    # DT[, Species := as.factor(Species)]
-    # old <- "factor"
-    # new <- "integer"
-    # easydata::cc(DT)
     
     if(!data.table::is.data.table(DT))
         stop("Data should be class data.table. Use 'as.data.table'", call. = FALSE)
@@ -64,114 +56,31 @@ ClassMorph <- function(DT,
         return(DT[])
     }
 
+    
+    
     colK <- quote(DT[[k]])
+    
     if(old == "factor" & (new %in% c("integer", "numeric")))
-        colK <- call("as.character", colK)
+        colK <- call("as.character", quote(DT[[k]]))
     
     oldcols <- names(which(sapply(DT, class) == old)) # Get position of cols to convert
-    e <- substitute(set(DT, j = k, value = do.call(paste0("as.", new), list(eval(colK)))))
+    
     
     for(k in oldcols){
-        if(!copy) copycol <- DT[[k]] # if we are converting by ref, copy in case NAs are generated unexpectadly
         
-        tryCatch(eval(e),
+        if(!copy) copycol <- copy(DT[[k]]) # if we are converting by ref, copy in case NAs are generated unexpectadly
+        
+        newcol <- do.call(paste0("as.", new), list(colK))
+        tryCatch(set(DT, j = k, value = newcol),
                  warning = function(c){
                      if(!force){
                          if(!copy) DT[, (k) := copycol] # reset data table
                          stop(paste0("Converting", k, " generated NAs. Set force=TRUE if desired."),call. = FALSE)    
                      }
-                     suppressWarnings(eval(e))
+                     suppressWarnings(set(DT, j = k, value = newcol))
                  })
     }
-    
     return(DT[])
-    
-    # colorder <- copy(colnames(DT)) # Save original column order. Set at end
-    # 
-    # 
-    # 
-    # 
-    # # # Get all pairs and id those that require indirect conversion
-    # # # E.g.  direct:   factor -> numeric
-    # # #       indirect: factor -> character -> numeric
-    # # #
-    # # types <- c("factor","integer","character","numeric","logical", "Date")
-    # # 
-    # # dtTypes <- CJ(From = types, To = types)
-    # # setkey(dtTypes, From, To)
-    # # 
-    # # dtTypes[.("factor", "numeric"), CharFirst := TRUE]
-    # # dtTypes[.("factor", "integer"), CharFirst := TRUE]
-    # # dtTypes[is.na(CharFirst), CharFirst := FALSE]
-    # # 
-    # # 
-    # # # If "from/to" pair requires indirect conversion, then wrap captured
-    # # # column in a call to "as.character"
-    # #
-    # 
-    # colK <- quote(DT[[k]])
-    # if( dtTypes[.(old, new), CharFirst] )
-    #     colK <- call("as.character", colK)
-    # 
-    # # Get position of cols to convert
-    # cols <- which(sapply(DT, class) == old)
-    # # cols <- sapply(DT, class) == old
-    # 
-    # setkeyv(DT, names(cols))
-    # for(k in names(cols)){
-    #     set(DT, j = k, value = call(paste0("as.", new), eval(colK)
-    # }
-    # 
-    # # print(cols)
-    # # For each col, evaluate call & set new
-    # if(new == "character"){
-    #     navector <- rep(NA_character_, nrow(DT))
-    # }else if(new == "numeric"){
-    #     navector <- rep(NA_real_, nrow(DT))
-    # }else if(new == "integer"){
-    #     navector <- rep(NA_integer_, nrow(DT))
-    # }else{
-    #     navector <- rep(NA, nrow(DT))
-    # }
-    #     
-    # 
-    # # Set columns to fill
-    # 
-    # DT[, (paste0("new_", names(cols))) := (navector)]
-    # 
-    # for (k in names(cols)){
-    #     
-    #     # Removed functionality:
-    #     # Get the index of non-null elements (nulls get collapsed by default
-    #     # but we want the number of replacement elements to match the number
-    #     # of rows in the cdt we are replacing in)
-    #     
-    #     val <- tryCatch(eval(call(paste0("as.", new), colK)),
-    #                     warning = function(c){
-    #                         if(!force){
-    #                             cdt[, (paste0("new_", names(cols))) := NULL] # reset data table
-    #                             stop("Conversion generated NAs. If expected set force=TRUE", call. = FALSE)
-    #                         }
-    #                         return(suppressWarnings(eval(call(paste0("as.", new), colK))))
-    #                     })
-    #     
-    #     newk <- paste0("new_", k)
-    #     set(cdt, j = newk, value = val)
-    # }
-    # 
-    # # now that we have new cols with correct classes, 
-    # # delete old ones and change new names to previous names
-    # cdt[, (names(cols)) := NULL]
-    # setnames(cdt, paste0("new_", names(cols)), names(cols))
-    # 
-    # # reset column orders
-    # setcolorder(cdt, colorder)
-    # 
-    # # ensure it was completed
-    # if(old %in% sapply(cdt, class))
-    #     stop("oops... something went wrong in ClassMorph")
-    # 
-    # return(cdt[])
 }
 
 #' @describeIn ClassMorph A function to standards classes to "numeric" for all columns of
