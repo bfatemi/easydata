@@ -27,7 +27,7 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     
     ccdt[, count_nona   := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
     ccdt[, count_na     := nrow(DT) - count_nona]
-    ccdt[, count_unique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
+    ccdt[, count_unique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
     
         
     ## date range of date class columns
