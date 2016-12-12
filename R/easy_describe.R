@@ -14,8 +14,8 @@
 #' @export
 #'
 #' @examples
-#' dtDescribe(as.data.table(iris))
-dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
+#' easy_describe(as.data.table(iris))
+easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     if(!is.data.table(DT)) stop("DT should be data.table class")
     
     ccdt <- pcc(DT, bret = TRUE) # start the descriptive table
@@ -25,8 +25,8 @@ dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     ##
     cols <- ccdt[, CName]   # get colnames of DT to describe
     
-    ccdt[, count_narm   := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
-    ccdt[, count_na     := nrow(DT) - count_narm]
+    ccdt[, count_nona   := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
+    ccdt[, count_na     := nrow(DT) - count_nona]
     ccdt[, count_unique := lapply(cols, function(i) length(unique(DT[, get(i)])))]
     
         
@@ -35,11 +35,26 @@ dtDescribe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     dcols <- ccdt[Class == "Date", CName]   # get date columns if any
     if(length(dcols) > 0){
         for(d in dcols)
-            ccdt[CName == d, range_date := paste0("(", min(DT[, get(d)]), "):(", max(DT[, get(d)]), ")")]
+            ccdt[CName == d, range_value := paste0("(", min(DT[!is.na(get(d)), get(d)]), "):(", max(DT[!is.na(get(d)), get(d)]), ")")]
+    }
+    
+    dcols <- ccdt[Class %in% c("integer", "numeric"), CName]   # get date columns if any
+    if(length(dcols) > 0){
+        for(d in dcols)
+            ccdt[CName == d, range_value := paste0("(", min(DT[!is.na(get(d)), get(d)]), "):(", max(DT[!is.na(get(d)), get(d)]), ")")]
+    }
+    
+    dcols <- ccdt[Class == "logical", CName]   # get date columns if any
+    if(length(dcols) > 0){
+        for(d in dcols){
+            ccdt[CName == d, range_value := "(FALSE):(TRUE)"]
+            ccdt[CName == d, pct_true := DT[!is.na(get(d)), round(sum(get(d))/count_nona, 3)]]
+        }
     }
     return(ccdt[])
 }
 
-globalVariables(c("count_unique", "count_na", "count_narm", "CName", "Class", "range_date"))
+globalVariables(c("count_unique", "count_na", "count_nona", "CName", "Class", "range_value", "pct_true"))
+
 
 
