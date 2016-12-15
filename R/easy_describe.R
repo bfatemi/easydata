@@ -57,6 +57,7 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     setnames(ccdt, c("Pos", "CName", "Class"), c("col_position", "col_name", "col_class"))
     setcolorder(ccdt, c("col_position", "col_name", "col_class", "count_unique", 
                         "count_NA", "count_nonNA", "range_values", "pct_true"))
+    setorderv(ccdt, c("col_class", "count_unique", "col_position"))
     return(ccdt[])
     
 }
