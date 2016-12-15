@@ -7,12 +7,13 @@ test_that(desc = "Testing the function easy_describe, which summarizes any datas
               res <- easy_describe(tmp)
               
               ## Expect the correct columns
-              cols <- c("CName", "Class", "Pos", "count_nona", "count_na", "count_unique", "range_value", "pct_true")
+              cols <- c("col_position", "col_name", "col_class", "count_unique", 
+                        "count_NA", "count_nonNA", "range_values", "pct_true")
               expect_equal(colnames(res), cols) 
               
               ## Spot check a particular expected entry
               val <- "(FALSE):(TRUE)"
-              expect_identical(res[6, range_value], val)
+              expect_identical(res[6, range_values], val)
               
               ## Expect proportion of true's to be 50%
               tmp[1:75, Log := FALSE]
@@ -21,6 +22,6 @@ test_that(desc = "Testing the function easy_describe, which summarizes any datas
               
               ## Expect proportion of true's to be 50%
               res <- easy_describe(tmp)
-              expect_identical(length(res[, Pos]), ncol(tmp))
-              expect_identical(res[, unique(count_nona)], nrow(tmp))
+              expect_identical(length(res[, col_position]), ncol(tmp))
+              expect_identical(res[, unique(count_nonNA)], nrow(tmp))
           })
