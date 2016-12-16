@@ -1,4 +1,4 @@
-# Examples of: ClassMorph, cc, CleanCols, CleanRows, easyswap, Booleanize
+# Examples of: ClassMorph, pcc, CleanCols, CleanRows, easyswap, Booleanize
 
 #-------------------------------------------------------------------------------------
 # Example: Change column classes in batch
@@ -31,10 +31,8 @@ ClassMorph(DT, "factor", "integer", force = TRUE)
 # Example: (c)heck (c)lasses
 #-------------------------------------------------------------------------------------
 
-cc(DT) 
-# > cc(DT)
-#         A           B           C           D           E           F           G           H 
-# "integer"   "numeric"   "integer"   "integer" "character" "character"   "numeric"   "logical" 
+pcc(DT) 
+
 
 
 #-------------------------------------------------------------------------------------
@@ -73,10 +71,7 @@ bDT <- Booleanize(DT, value = 1)
 #easyswap(bDT, swap = "f")               # error bc "f" is not the same type as the col
 easyswap(bDT, swap = "f", force = TRUE) # forces the col class to be same class as swap arg
 
-cc(bDT)
-# > cc(bDT)
-#           A           B           C           D           E           F           G           H 
-# "character"   "logical" "character"   "logical"   "logical"   "logical" "character" "character" 
+pcc(bDT)
 
 
 # let's put false back in, but NOT by reference, and only on a subset of columns:

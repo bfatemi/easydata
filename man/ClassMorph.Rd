@@ -3,7 +3,6 @@
 \name{ClassMorph}
 \alias{ClassMorph}
 \alias{NumMorph}
-\alias{cc}
 \alias{pcc}
 \title{Functions to Change Column Classes}
 \usage{
@@ -12,8 +11,6 @@ ClassMorph(DT, old = c("factor", "integer", "character", "numeric", "logical",
   copy = FALSE, force = FALSE)
 
 NumMorph(DT, cols = NULL, copy = FALSE, verbose = FALSE)
-
-cc(DT)
 
 pcc(DT, ord = NULL, bret = FALSE)
 }
@@ -68,12 +65,10 @@ unexpected results (see details).
 \item \code{NumMorph}: A function to standards classes to "numeric" for all columns of
 DT, where a conversion to numeric would not generate NA values.
 
-\item \code{cc}: returns column classes
-
 \item \code{pcc}: prints (default) or returns a data.table describing column classes
 }}
 \examples{
-# Examples of: ClassMorph, cc, CleanCols, CleanRows, easyswap, Booleanize
+# Examples of: ClassMorph, pcc, CleanCols, CleanRows, easyswap, Booleanize
 
 #-------------------------------------------------------------------------------------
 # Example: Change column classes in batch
@@ -106,10 +101,8 @@ ClassMorph(DT, "factor", "integer", force = TRUE)
 # Example: (c)heck (c)lasses
 #-------------------------------------------------------------------------------------
 
-cc(DT) 
-# > cc(DT)
-#         A           B           C           D           E           F           G           H 
-# "integer"   "numeric"   "integer"   "integer" "character" "character"   "numeric"   "logical" 
+pcc(DT) 
+
 
 
 #-------------------------------------------------------------------------------------
@@ -148,10 +141,7 @@ bDT <- Booleanize(DT, value = 1)
 #easyswap(bDT, swap = "f")               # error bc "f" is not the same type as the col
 easyswap(bDT, swap = "f", force = TRUE) # forces the col class to be same class as swap arg
 
-cc(bDT)
-# > cc(bDT)
-#           A           B           C           D           E           F           G           H 
-# "character"   "logical" "character"   "logical"   "logical"   "logical" "character" "character" 
+pcc(bDT)
 
 
 # let's put false back in, but NOT by reference, and only on a subset of columns:

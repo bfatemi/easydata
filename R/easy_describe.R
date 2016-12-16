@@ -20,7 +20,6 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     if(!is.data.table(DT)) stop("DT should be data.table class")
     
     ccdt <- pcc(DT, bret = TRUE) # start the descriptive table
-    
     ## count of unique values
     ## count of NAs per columns
     ##

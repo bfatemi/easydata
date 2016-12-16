@@ -11,27 +11,27 @@ dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
                  F = rep("2020-01-22", 5))
 dt
 
-# print column classes
-cc(dt) 
+pcc(dt)               # print column classes
+# pcc(dt, bret=TRUE)  # Return table of column classes
 
 ## ---- error=TRUE---------------------------------------------------------
 ClassMorph(dt, "factor", "integer") #results in ERROR
 
 ## ------------------------------------------------------------------------
 ClassMorph(dt, "factor", "integer", force = TRUE) # no error
-cc(dt)
+pcc(dt)
 
 ## ---- results='hold'-----------------------------------------------------
 newdt <- ClassMorph(dt, "numeric", "factor", copy = TRUE)
 
-identical(cc(dt), cc(newdt))    # classes are not equal
-cc(dt)                      # confirm correct conversion
-cc(newdt)
+identical(pcc(dt), pcc(newdt))    # classes are not equal
+pcc(dt)                      # confirm correct conversion
+pcc(newdt)
 
 ## ---- results='hold'-----------------------------------------------------
-cc(dt)
+pcc(dt)
 newdt <- ClassMorph(dt, "numeric", "factor")
 
-identical(cc(dt), cc(newdt))
+identical(pcc(dt), pcc(newdt))
 identical(dt, newdt)  
 

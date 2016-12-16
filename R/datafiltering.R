@@ -128,7 +128,7 @@ RoundCols <- function(DT, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE,
 #' @describeIn dataclean A convienience wrapper for \code{data.table::setcolorder} that makes it easy 
 #'      set the order of a subset of columns
 #' @export
-p_setcolorder <- function(DT, cols=NULL, aslast=TRUE){
+p_setcolorder <- function(DT, cols=NULL, aslast=TRUE, verbose = FALSE){
     if(is.null(cols))
         stop("provide a vector of column names to set order")
     
@@ -141,7 +141,8 @@ p_setcolorder <- function(DT, cols=NULL, aslast=TRUE){
         setcolorder(DT, c(cols, othercols))
     
     content <- paste0(1:length(colnames(DT)), ". ", colnames(DT), collapse = "\n")
-    fubar::PrintMessage("New column order set", content = content)
+    
+    if(verbose) fubar::PrintMessage("New column order set", content = content)
 }
 
 
