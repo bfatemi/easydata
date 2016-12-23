@@ -12,7 +12,7 @@
 
 <meta name="author" content="Bobby Fatemi" />
 
-<meta name="date" content="2016-09-14" />
+<meta name="date" content="2016-12-23" />
 
 <title>Changing Column Classes in Batch</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Changing Column Classes in Batch</h1>
 <h4 class="author"><em>Bobby Fatemi</em></h4>
-<h4 class="date"><em>2016-09-14</em></h4>
+<h4 class="date"><em>2016-12-23</em></h4>
 
 
 
@@ -94,16 +94,31 @@ dt</code></pre></div>
 ## 4: 4 2         999 d 2020-01-22
 ## 5: 5 2       3 999 e 2020-01-22</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print column classes</span>
-<span class="kw">cc</span>(dt) </code></pre></div>
-<pre><code>##           A           B           C           D           E           F 
-##    &quot;factor&quot;   &quot;numeric&quot;    &quot;factor&quot;    &quot;factor&quot; &quot;character&quot; &quot;character&quot;</code></pre>
+<span class="kw">pcc</span>(dt) </code></pre></div>
+<pre><code>##  CName     Class Pos
+##      A    factor   1
+##      B   numeric   2
+##      C    factor   3
+##      D    factor   4
+##      E character   5
+##      F character   6</code></pre>
 <div id="errors-when-generating-na" class="section level3">
 <h3>Errors when generating NA</h3>
 <p>The following line will generate NAs because there is an element called “garbage” in the column Factor. In fact, a missed non-numeric value in an otherwise all numeric column is a common reason the class automatically gets read as a factor.</p>
 <div id="change-all-factor-columns-to-integer-columns" class="section level4">
 <h4>Change all factor columns to integer columns</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ClassMorph</span>(dt, <span class="st">&quot;factor&quot;</span>, <span class="st">&quot;integer&quot;</span>) <span class="co">#results in ERROR</span></code></pre></div>
-<pre><code>## Error: ConvertingA generated NAs. Set force=TRUE if desired.</code></pre>
+<pre><code>## Warning in do.call(paste0(&quot;as.&quot;, new), list(colK)): NAs introduced by
+## coercion
+
+## Warning in do.call(paste0(&quot;as.&quot;, new), list(colK)): NAs introduced by
+## coercion</code></pre>
+<pre><code>##     A B  C   D E          F
+## 1:  1 2  1 999 a 2020-01-22
+## 2:  2 2 NA 999 b 2020-01-22
+## 3: NA 2  2 999 c 2020-01-22
+## 4:  4 2 NA 999 d 2020-01-22
+## 5:  5 2  3 999 e 2020-01-22</code></pre>
 <p>See how to use the ‘force’ flag to bypass expected transformations (we expected NAs in the example above)</p>
 </div>
 </div>
@@ -111,39 +126,88 @@ dt</code></pre></div>
 <h3>The ‘force’ flag</h3>
 <p>Naturally, when converting “garbage” to an integer, you will get an NA. To prevent accidental loss of data, the default behavior is to generate an error when conversion creates NAs. This should only be expected to happen when going from factor to numeric/integer. In cases where NAs are expected, set the force flag = TRUE:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ClassMorph</span>(dt, <span class="st">&quot;factor&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="dt">force =</span> <span class="ot">TRUE</span>) <span class="co"># no error</span></code></pre></div>
+<pre><code>## Warning: No columns of class specified with the argument 'old'</code></pre>
 <pre><code>##     A B  C   D E          F
 ## 1:  1 2  1 999 a 2020-01-22
 ## 2:  2 2 NA 999 b 2020-01-22
 ## 3: NA 2  2 999 c 2020-01-22
 ## 4:  4 2 NA 999 d 2020-01-22
 ## 5:  5 2  3 999 e 2020-01-22</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cc</span>(dt)</code></pre></div>
-<pre><code>##           A           B           C           D           E           F 
-##   &quot;integer&quot;   &quot;numeric&quot;   &quot;integer&quot;   &quot;integer&quot; &quot;character&quot; &quot;character&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pcc</span>(dt)</code></pre></div>
+<pre><code>##  CName     Class Pos
+##      A   integer   1
+##      B   numeric   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6</code></pre>
 </div>
 <div id="the-copy-flag" class="section level3">
 <h3>The ‘copy’ flag</h3>
 <p>When ‘copy’ is set to TRUE, <code>ClassMorph</code> does not modify the data <em>in place</em>. Rather, it generates a new copy of dt. Notice in the previous examples, ClassMorph had no return object. That is due to the fact that ClassMorph was modifying the data in-place. Traditionally R has been a “copy-on-modify” language. This is typically not the norm today as we expect to work with larger &amp; larger datasets. However, in some cases ‘copy-on-modify’ is desired. For example, if we want to be conservative about accidental data loss, we would specify the flag ‘copy=TRUE’ and then manually delete the old table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newdt &lt;-<span class="st"> </span><span class="kw">ClassMorph</span>(dt, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;factor&quot;</span>, <span class="dt">copy =</span> <span class="ot">TRUE</span>)
 
-<span class="kw">identical</span>(<span class="kw">cc</span>(dt), <span class="kw">cc</span>(newdt))    <span class="co"># classes are not equal</span>
-<span class="kw">cc</span>(dt)                      <span class="co"># confirm correct conversion</span>
-<span class="kw">cc</span>(newdt)</code></pre></div>
-<pre><code>## [1] FALSE
-##           A           B           C           D           E           F 
-##   &quot;integer&quot;   &quot;numeric&quot;   &quot;integer&quot;   &quot;integer&quot; &quot;character&quot; &quot;character&quot; 
-##           A           B           C           D           E           F 
-##   &quot;integer&quot;    &quot;factor&quot;   &quot;integer&quot;   &quot;integer&quot; &quot;character&quot; &quot;character&quot;</code></pre>
+<span class="kw">identical</span>(<span class="kw">pcc</span>(dt), <span class="kw">pcc</span>(newdt))    <span class="co"># classes are not equal</span>
+<span class="kw">pcc</span>(dt)                      <span class="co"># confirm correct conversion</span>
+<span class="kw">pcc</span>(newdt)</code></pre></div>
+<pre><code>##  CName     Class Pos
+##      A   integer   1
+##      B   numeric   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
+##  CName     Class Pos
+##      A   integer   1
+##      B    factor   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
+## [1] TRUE
+##  CName     Class Pos
+##      A   integer   1
+##      B   numeric   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
+##  CName     Class Pos
+##      A   integer   1
+##      B    factor   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6</code></pre>
 <blockquote>
 <p>IMPORTANT: without specifying ‘copy=TRUE’, newdt is simply just pointing to dt. See demonstration of this below.</p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cc</span>(dt)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pcc</span>(dt)
 newdt &lt;-<span class="st"> </span><span class="kw">ClassMorph</span>(dt, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;factor&quot;</span>)
 
-<span class="kw">identical</span>(<span class="kw">cc</span>(dt), <span class="kw">cc</span>(newdt))
+<span class="kw">identical</span>(<span class="kw">pcc</span>(dt), <span class="kw">pcc</span>(newdt))
 <span class="kw">identical</span>(dt, newdt)  </code></pre></div>
-<pre><code>##           A           B           C           D           E           F 
-##   &quot;integer&quot;   &quot;numeric&quot;   &quot;integer&quot;   &quot;integer&quot; &quot;character&quot; &quot;character&quot; 
+<pre><code>##  CName     Class Pos
+##      A   integer   1
+##      B   numeric   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
+##  CName     Class Pos
+##      A   integer   1
+##      B    factor   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
+##  CName     Class Pos
+##      A   integer   1
+##      B    factor   2
+##      C   integer   3
+##      D   integer   4
+##      E character   5
+##      F character   6
 ## [1] TRUE
 ## [1] TRUE</code></pre>
 <hr />

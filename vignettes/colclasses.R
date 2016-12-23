@@ -11,8 +11,8 @@ dt <- data.table(A = as.factor(c(1:2, "-", 4:5)),
                  F = rep("2020-01-22", 5))
 dt
 
-pcc(dt)               # print column classes
-# pcc(dt, bret=TRUE)  # Return table of column classes
+# print column classes
+pcc(dt) 
 
 ## ---- error=TRUE---------------------------------------------------------
 ClassMorph(dt, "factor", "integer") #results in ERROR

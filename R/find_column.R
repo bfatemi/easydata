@@ -16,10 +16,25 @@
 #' @export
 #'
 #' @examples
-#' #EXAMPLES TBD
+#' ## Create fake data
+#' ##
+#' DT <- rbindlist(
+#'     list(
+#'         data.table(V1 = "Junk notes as first row", V2=NA, V3=NA, V4=NA), 
+#'         data.table("colA", "colB", "colC", "colD")
+#'     ), fill=TRUE)
+#'     
+#' ## Can't find name
+#' find_column("does not exist", DT) # (0, 0)
+#' 
+#' ## Finds name as current column name
+#' find_column("V3", DT) # (0, 3)
+#' 
+#' ## Finds a name
+#' find_column("colA", DT)
 find_column <- function(colName, DT){
     
-    if(class(DT) != "data.table")
+    if(!is.data.table(DT))
         stop("DT should be of class 'data.table'")
     
     cnames <- colnames(DT)
