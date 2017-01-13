@@ -6,7 +6,7 @@
 #' @param rhs Character vector
 #'
 #' @export
-reformit <- function(lhs, rhs){
+rformula <- function(lhs, rhs){
     c.lhs <- paste0(lhs, collapse = " + ")
     c.rhs <- paste0(rhs, collapse = " + ")
     stats::as.formula(paste0(c.lhs, " ~ ", c.rhs))

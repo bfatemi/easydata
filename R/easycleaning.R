@@ -1,18 +1,24 @@
 #' Functions to help with Data Cleaning
 #'
 #' @param DT A data table to operate on
-#' @param date_vec A vector of values of class POSIXct
 #' @param cols columns of a data.table to focus the operation on
 #' @param value In the case of booleanize, a value to look for throughout the table
 #' @param not A boolean. Negates the output of \code{booleanize}
 #' @param index In the case of \code{CleanRows}, if \code{index} is TRUE, 
 #'      an Index column will be created to track which rows were removed
 #' @param verbose A boolean indicating whether to print information on the console
+#' @param aslast A boolean indicating whether arrange the non-order columns before or after (asLast = TRUE)
+#'      the ordered ones
+#' @param digits A numeric indicating the number of digits to round in \code{RoundCols}
+#' @param igncols A character vector indicating which columns to ignore 
+#' @param b_skip A boolean indicating whether to skip non-numeric columns that \code{RoundCols} encounters
+#' @param b_copy A boolean indicating whether to make a copy of the data, or operate on by reference
+#' 
 #' @example inst/examples/ex-cleaning.R
-#' @name dataclean
+#' @name easycleaning
 NULL
 
-#' @describeIn dataclean A function to remove all columns that have ONLY NA values 
+#' @describeIn easycleaning A function to remove all columns that have ONLY NA values 
 #' @export
 CleanCols <- function(DT){
     f <- function(c){
@@ -23,7 +29,7 @@ CleanCols <- function(DT){
     DT[, sapply(DT, f), with=FALSE]
 }
 
-#' @describeIn dataclean A function to remove na rows in specified columes
+#' @describeIn easycleaning A function to remove na rows in specified columes
 #' @export
 CleanRows <- function(DT, cols = NULL, index = FALSE){
     DT <- CleanCols(DT)
@@ -33,7 +39,7 @@ CleanRows <- function(DT, cols = NULL, index = FALSE){
     DT[Reduce("&", Booleanize(DT, cols, NA, TRUE))]
 }
 
-#' @describeIn dataclean A function to remove duplicates across all columns (default),
+#' @describeIn easycleaning A function to remove duplicates across all columns (default),
 #'          or a given set of columns
 #' @export
 ddup <- function(DT, cols=NULL, verbose=TRUE){
@@ -57,7 +63,7 @@ ddup <- function(DT, cols=NULL, verbose=TRUE){
 }
 
 
-#' @describeIn dataclean A function that turns a data.table into all logical values based on finding the value arg
+#' @describeIn easycleaning A function that turns a data.table into all logical values based on finding the value arg
 #'      in all or selected columns
 #' @export
 Booleanize <- function(DT=NULL, cols=NULL, value=NULL, not=FALSE){
@@ -74,11 +80,7 @@ Booleanize <- function(DT=NULL, cols=NULL, value=NULL, not=FALSE){
     else DT[, sapply(cols, function(i) eval(e), simplify = FALSE)]
 }
 
-#' @param digits A numeric indicating the number of digits to round in \code{RoundCols}
-#' @param igncols A character vector indicating which columns to ignore 
-#' @param b_skip A boolean indicating whether to skip non-numeric columns that \code{RoundCols} encounters
-#' @param b_copy A boolean indicating whether to make a copy of the data, or operate on by reference
-#' @describeIn dataclean A convienience wrapper for \code{round} that applies to all or a subset of cols
+#' @describeIn easycleaning A convienience wrapper for \code{round} that applies to all or a subset of cols
 #' @export
 RoundCols <- function(DT, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE, b_copy=TRUE){
     # digits = 2
@@ -113,9 +115,6 @@ RoundCols <- function(DT, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE,
     if(!length(numCols))
         stop(paste0("No numeric cols. All skipped: ", paste0(skipped, collapse = ", ")), call. = FALSE)
     
-    
-    # cols <- c("Value", "spec_lower", "spec_upper")
-    
     for(c in cols)
         data.table::set(dat, j = c, value = round(get(c, dat), digits))
     
@@ -123,9 +122,7 @@ RoundCols <- function(DT, digits = 2, igncols = NULL, cols = NULL, b_skip=FALSE,
 }
 
 
-#' @param aslast A boolean indicating whether arrange the non-order columns before or after (asLast = TRUE)
-#'      the ordered ones
-#' @describeIn dataclean A convienience wrapper for \code{data.table::setcolorder} that makes it easy 
+#' @describeIn easycleaning A convienience wrapper for \code{data.table::setcolorder} that makes it easy 
 #'      set the order of a subset of columns
 #' @export
 p_setcolorder <- function(DT, cols=NULL, aslast=TRUE, verbose = FALSE){
@@ -146,23 +143,23 @@ p_setcolorder <- function(DT, cols=NULL, aslast=TRUE, verbose = FALSE){
 }
 
 
-#' @describeIn dataclean A function to expand elements of a timestamp into 
-#'      numerous columns in a new data.table
-#' @export
-xDate <- function(date_vec){
-    DateDT <- data.table(
-        Wkday = lubridate::wday(date_vec),       # day of week
-        Monthday = lubridate::day(date_vec),     # day of month
-        Yrday = lubridate::yday(date_vec),       # day of year
-        Week = lubridate::week(date_vec),        # Week of year
-        Month = lubridate::month(date_vec),      # month of year
-        Qtr = lubridate::quarter(date_vec),      # quarter of year
-        Year = lubridate::year(date_vec),        # Year
-        Hour = lubridate::hour(date_vec),
-        Minute = lubridate::minute(date_vec),
-        Second = lubridate::second(date_vec)
-    )
-    return(DateDT)
-}
-
+# #' @describeIn dataclean A function to expand elements of a timestamp into 
+# #'      numerous columns in a new data.table
+# #' @export
+# xDate <- function(date_vec){
+#     DateDT <- data.table(
+#         Wkday = lubridate::wday(date_vec),       # day of week
+#         Monthday = lubridate::day(date_vec),     # day of month
+#         Yrday = lubridate::yday(date_vec),       # day of year
+#         Week = lubridate::week(date_vec),        # Week of year
+#         Month = lubridate::month(date_vec),      # month of year
+#         Qtr = lubridate::quarter(date_vec),      # quarter of year
+#         Year = lubridate::year(date_vec),        # Year
+#         Hour = lubridate::hour(date_vec),
+#         Minute = lubridate::minute(date_vec),
+#         Second = lubridate::second(date_vec)
+#     )
+#     return(DateDT)
+# }
+# 
 

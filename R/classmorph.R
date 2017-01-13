@@ -111,13 +111,6 @@ NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
     return(DT)
 }
 
-# #' @describeIn ClassMorph returns column classes
-# #' @export
-# cc <- function(DT){
-#     sapply(DT, class)
-# }
-
-
 #' @describeIn ClassMorph prints (default) or returns a data.table describing column classes
 #' @param ord For convenience, an optional char vec indicating how to sort rows. Can be one 
 #'          of: "CName", "Class", or "Pos" (position)

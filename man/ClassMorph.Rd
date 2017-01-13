@@ -95,26 +95,17 @@ DT
 
 # no error, and by reference. To operate on a copy, run with copy=TRUE
 ClassMorph(DT, "factor", "integer", force = TRUE)
-
-
-#-------------------------------------------------------------------------------------
-# Example: (c)heck (c)lasses
-#-------------------------------------------------------------------------------------
-
-pcc(DT) 
-
-
+pcc(DT)
 
 #-------------------------------------------------------------------------------------
 # Example: Clean columns or rows
+#
+# Sometimes a set operation will result in a bunch of columns being all NAs and if
+# there are many columns, it's useful to drop all of them:
 #-------------------------------------------------------------------------------------
+cDT <- CleanCols(DT) # Drop all NA columns
 
-# Sometimes a set operation will result in a bunch of columns being all NAs. 
-# It's sometimes useful to clean out these columns in very large tables.
-# Then move on to cleaning out NA rows
-
-cDT <- CleanCols(DT)
-
+# Drop rows based on NA value in ANY column, or a subset of columns
 CleanRows(cDT)               # remove all rows that have an NA value across any of the columns
 CleanRows(cDT, "A")          # just in one column
 CleanRows(cDT, c("A", "C"))  # subset of columns
@@ -125,6 +116,7 @@ CleanRows(cDT, c("A", "C"))  # subset of columns
 #-------------------------------------------------------------------------------------
 
 bDT <- Booleanize(DT, value = 1)
+
 # > bDT
 #        A     B     C     D     E     F    G  H
 # 1:  TRUE FALSE  TRUE FALSE FALSE FALSE TRUE NA
@@ -133,37 +125,6 @@ bDT <- Booleanize(DT, value = 1)
 # 4: FALSE FALSE    NA FALSE FALSE FALSE   NA NA
 # 5: FALSE FALSE FALSE FALSE FALSE FALSE   NA NA
 
-# we can swap out the remaining NAs if desired, though it's less common as typically 
-# I avoid associating NAs with a valid entry to test against
-#
-# swaps out NA for FALSE by reference Set copy = TRUE to operate on a copy of the data
-
-#easyswap(bDT, swap = "f")               # error bc "f" is not the same type as the col
-easyswap(bDT, swap = "f", force = TRUE) # forces the col class to be same class as swap arg
-
-pcc(bDT)
-
-
-# let's put false back in, but NOT by reference, and only on a subset of columns:
-easyswap(bDT, 
-         cols = c("G", "H"),
-         find = "f", 
-         swap = FALSE, 
-         force = TRUE, 
-         copy = TRUE)
-
-# > easyswap(bDT, 
-#            cols = c("G", "H"),
-#            find = "f", 
-#            swap = FALSE, 
-#            force = TRUE, 
-#            copy = TRUE)
-# A     B     C     D     E     F     G     H
-# 1:  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-# 2: FALSE FALSE     f FALSE FALSE FALSE FALSE FALSE
-# 3:     f FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-# 4: FALSE FALSE     f FALSE FALSE FALSE FALSE FALSE
-# 5: FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 
 pcc(iris)                       # print sorted by ord (default)
 pcc(iris, "Class")              # print sorted by "Class"

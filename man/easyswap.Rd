@@ -40,11 +40,10 @@ dt <- data.table(A = c("A", NA, "A", "A", NA),
                  C = rep(NA, 5),
                  D = c("D", "D", "D", NA, "D"))
 # Simple use
-easyswap(dt, find="A", swap = "AA")
+easyswap(dt, find="A", swap = "XXX")
 
 # ERROR: swaping a numeric into char column. USE FORCE = TRUE
-# xSwap(dt, swap = 0)
-
+# easyswap(dt, swap = 0)
 easyswap(dt, swap = 0, force = TRUE) # No error
 
 # Make a copy of the table rather than an "IN-MEMORY" swap. This will return a NEW dt

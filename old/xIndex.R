@@ -1,10 +1,8 @@
 #' Generate Indices
 #' 
-#' A function to create a split index. Comes in handy if parallelizing a computation over a very large dataset
+#' A function to 
 #' 
-#' @param totalN A numeric value representing the total observations to split an index over
-#' @param eachN A numeric value representing the desired number of splits
-#' @param mat A boolean indicating whether to return the splits as a list or matrix (simplified)
+
 #'
 #' @export
 #'
@@ -13,7 +11,7 @@
 #' eachN <- 10
 #' SplitIndex(totalN, eachN) # Not simplified
 #' SplitIndex(totalN, eachN, mat = TRUE) # simplified
-SplitIndex <- function(totalN=NULL, eachN, mat=FALSE){
+split_index <- function(totalN=NULL, eachN, mat=FALSE){
     # totalN <- 99962
     # eachN <- 338
     eachLen <- totalN %/% eachN
@@ -39,8 +37,7 @@ SplitIndex <- function(totalN=NULL, eachN, mat=FALSE){
 
 #' @describeIn SplitIndex A convenience wrapper around splitIndices. Reduces a step necessary if 
 #'      desire is to split a defined vector
-#' @param vec A vector to split into n list elements
-#' @param n The number of desired list elements to split vec into
+
 #' @export
 #'
 #' @examples
