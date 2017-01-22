@@ -21,6 +21,14 @@
 #' @name index_functions
 NULL
 
+
+# tpath <- system.file("ext", "template.yml", package = "spawnr")
+# ci_template <- readLines(tpath)     # template stored in package folder
+# 
+# ## break template into named list elements
+# index <- which(stringr::str_detect(ci_template, "^#\\-\\-$"))
+# split_by_index(ci_template, index, include_first = FALSE, include_at_index=F)
+
 #' @describeIn index_functions Split a vector or table by a position given by index vector
 #' @export
 split_by_index <- function(dat = NULL, index=NULL, include_first = TRUE, include_at_index = TRUE){
