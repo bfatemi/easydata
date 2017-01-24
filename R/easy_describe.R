@@ -29,10 +29,10 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     ccdt[, count_NA     := nrow(DT) - count_nonNA]
     ccdt[, count_unique := sapply(cols, function(i) length(unique(DT[, get(i)])))]
     ccdt[, pct_true := NA_real_]
-        
+    
     ## date range of date class columns
     ##
-    dcols <- ccdt[Class == "Date", CName]   # get date columns if any
+    dcols <- ccdt[Class == "Date" | Class == "POSIXct_POSIXt", CName]   # get date columns if any
     if(length(dcols) > 0){
         for(d in dcols)
             ccdt[CName == d, 
