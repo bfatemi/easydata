@@ -124,9 +124,16 @@ NumMorph <- function(DT, cols=NULL, copy=FALSE, verbose=FALSE){
 #' pcc(iris, "CName", bret = TRUE) # sort and return data.table
 #' 
 pcc <- function(DT, ord=NULL, bret=FALSE){
-    r <- sapply(DT, class)
-    rdt <- data.table(CName = names(r), Class = r, Pos = 1:length(r))
+    r <- sapply(DT, class, simplify = TRUE)
+    cnam <- names(r)
     
+    ind_mult_len <- which(sapply(r, length) > 1)
+    
+    lapply(ind_mult_len, function(ind){
+        r[[ind]] <<- paste0(r[[ind]], collapse = "_")
+    })
+    
+    rdt <- data.table(CName = cnam, Class = as.character(r), Pos = 1:length(r))
     if(!is.null(ord)){
         ord <- match.arg(ord, choices = c("CName", "Class", "Pos"))
         setorderv(rdt, ord)
@@ -135,7 +142,6 @@ pcc <- function(DT, ord=NULL, bret=FALSE){
         return(rdt)
     print(rdt, row.names = FALSE)
 }
-
 
 
 
