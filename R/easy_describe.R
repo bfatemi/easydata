@@ -49,19 +49,40 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     dcols <- ccdt[Class == "logical", CName]   # get date columns if any
     if(length(dcols) > 0){
         for(d in dcols){
-            ccdt[CName == d, range_values := "(FALSE):(TRUE)"]
-            ccdt[CName == d, pct_true := DT[!is.na(get(d)), round(sum(get(d))/count_nonNA, 3)]]
+            ccdt[CName == d, range_values := "FALSE : TRUE"]
+            ccdt[CName == d, pct_true := DT[!is.na(get(d)), round(sum(get(d))/count_nonNA, 5)]]
         }
     }
+    
+    ccdt[count_NA > 0, pct_NA := round(count_NA/nrow(DT), 5)]
+    
     setnames(ccdt, c("Pos", "CName", "Class"), c("col_position", "col_name", "col_class"))
     setcolorder(ccdt, c("col_position", "col_name", "col_class", "count_unique", 
-                        "count_NA", "count_nonNA", "range_values", "pct_true"))
+                        "count_NA", "count_nonNA", "range_values", 
+                        "pct_true", "pct_NA"))
     setorderv(ccdt, c("col_class", "count_unique", "col_position"))
     return(ccdt[])
     
 }
 
 globalVariables(c("count_unique", "count_NA", "count_nonNA", "CName", "Class", "range_values", "pct_true"))
+
+
+
+# make_factor <- function(num, DT, descDT){
+#     DT <- copy(MDT)
+#     descDT <- copy(desc_MDT)
+#     cnames <- descDT[count_unique < 100 & 
+#                          count_NA/count_nonNA < .2 & 
+#                          col_class %in% c("character", "integer", "numeric", "factor"), 
+#                      col_name]
+#     
+#     for(cn in cnames)
+#         set(DT, j = cn, value = as.factor(DT[, cn, with=FALSE]))
+#     return(DT[])
+# }
+
+
 
 # easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
 #     
