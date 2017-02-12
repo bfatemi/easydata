@@ -65,7 +65,7 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     
 }
 
-globalVariables(c("count_unique", "count_NA", "count_nonNA", "CName", "Class", "range_values", "pct_true"))
+globalVariables(c("count_unique", "count_NA", "count_nonNA", "CName", "Class", "range_values", "pct_true", "pct_NA"))
 
 
 
