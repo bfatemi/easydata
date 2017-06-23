@@ -26,6 +26,7 @@ within a list.
  The number of elements in "ll" and the size of those 
 elements determines the number of elements in the return value.
 }
+
 \examples{
 library(data.table)
 
@@ -38,4 +39,3 @@ dt <- data.table(ColA = c(1, 2, 3, 4, 5, 4, 4, 3, 3),
 #
 easysplit(x=dt, list(ColA = 3:4, ColB = "c"))
 }
-

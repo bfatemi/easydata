@@ -2,9 +2,12 @@
 % Please edit documentation in R/easy_describe.R
 \name{easy_describe}
 \alias{easy_describe}
+\alias{split_by_class}
 \title{Functions to help with pre-data exploration}
 \usage{
 easy_describe(DT, cols = NULL, cclass = NULL, FUN = NULL, all = NULL)
+
+split_by_class(DT)
 }
 \arguments{
 \item{DT}{A data.table}
@@ -25,7 +28,11 @@ A descriptive data.table
 \description{
 Helper functions to assist with basic data exploration tasks.
 }
+\section{Functions}{
+\itemize{
+\item \code{split_by_class}: A function to split the column names of a data.table into groups specified by class
+}}
+
 \examples{
 easy_describe(as.data.table(iris))
 }
-

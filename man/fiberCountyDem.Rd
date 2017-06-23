@@ -37,4 +37,3 @@ A dataset that contains GDP and demographic data (at the county level) from the 
 merged with Fiber internet adoption and access data from NTIA
 }
 \keyword{datasets}
-

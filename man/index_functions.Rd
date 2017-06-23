@@ -2,8 +2,8 @@
 % Please edit documentation in R/index_functions.R
 \name{index_functions}
 \alias{index_functions}
-\alias{make_index}
 \alias{split_by_index}
+\alias{make_index}
 \alias{splitn}
 \title{Split into List}
 \usage{
@@ -49,6 +49,7 @@ Functions to work with indices, or split objects by indices. Functionality inclu
 
 \item \code{splitn}: A convenience wrapper around splitIndices. Reduces a step potentially
 }}
+
 \examples{
 totalN <- 1000
 eachN <- 10
@@ -56,4 +57,3 @@ make_index(totalN, eachN) # Not simplified
 make_index(totalN, eachN, mat = TRUE) # simplified
 splitn(letters, 4)
 }
-

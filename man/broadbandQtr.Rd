@@ -26,4 +26,3 @@ by country. Note this data was scraped from the website of a leading
 provider of internet statistics and trends.
 }
 \keyword{datasets}
-

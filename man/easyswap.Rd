@@ -55,4 +55,3 @@ easyswap(dt,
          swap = "999",
          cols = c("A", "B"))
 }
-

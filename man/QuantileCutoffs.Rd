@@ -60,4 +60,3 @@ quants <- c(.3, .7)
 #
 QuantileCutoffs(DT, values, grouping, quants, bMelt=FALSE)
 }
-
