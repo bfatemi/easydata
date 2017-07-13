@@ -4,17 +4,32 @@
 \alias{id_outliers}
 \title{A function that identifies outliers in a vector of numeric data}
 \usage{
-id_outliers(x = NULL)
+id_outliers(x = NULL, method = c("quantile", "prob"), p = 0.05)
 }
 \arguments{
 \item{x}{A vector that is of class numeric, or coercible to one}
+
+\item{method}{The method to use in order to identify outliers. This should be one of "quantile" or "prob"}
+
+\item{p}{If method "prob" is selected, this parameter defines the probability threshold for 
+outlier classification}
 }
 \value{
-A logical vector where TRUE identifies the position of an outlier in the
-    input argument
+A logical vector where TRUE identifies the position of an outlier in the input argument
 }
 \description{
-A function that identifies outliers in a vector of numeric data
+Identify outliers using the standard IQR approach or assuming a normal distribution 
+and identifying outliers using probability. See details below for description of the
+calculations.
+}
+\details{
+IQR approach: outliers are defined as observations that fall above 1.5 times the third 
+quantile and below 1.5 times the first quantile.
+
+Probability approach: assuming a normal distribution of values, outliers are flagged as 
+values that have a 5% probability (parameterized for user control) of occuring given the
+sample data. This method uses both tails of the distribution (e.g. values that are below 
+and above the mean)
 }
 \examples{
 #vec <- rnorm(100, 0, 1)
