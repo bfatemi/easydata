@@ -13,7 +13,6 @@
 #' Y <- c("A", "B", "C")
 #' X <- c("D", "E", "F")
 #' xFormula(Y, X)
-#' 
 xFormula <- function(y = NULL, x = NULL){
     
     env <- rlang::caller_env()

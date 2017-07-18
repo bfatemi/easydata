@@ -22,5 +22,4 @@ and returns and R formula object.
 Y <- c("A", "B", "C")
 X <- c("D", "E", "F")
 xFormula(Y, X)
-
 }
