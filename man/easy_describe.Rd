@@ -3,11 +3,17 @@
 \name{easy_describe}
 \alias{easy_describe}
 \alias{split_by_class}
+\alias{wcolNA}
+\alias{wrowNA}
 \title{Functions to help with pre-data exploration}
 \usage{
 easy_describe(DT, cols = NULL, cclass = NULL, FUN = NULL, all = NULL)
 
 split_by_class(DT)
+
+wcolNA(DT)
+
+wrowNA(DT)
 }
 \arguments{
 \item{DT}{A data.table}
@@ -31,6 +37,10 @@ Helper functions to assist with basic data exploration tasks.
 \section{Functions}{
 \itemize{
 \item \code{split_by_class}: A function to split the column names of a data.table into groups specified by class
+
+\item \code{wcolNA}: Which columns contain all NA values down the rows (all obervations are NA)
+
+\item \code{wrowNA}: Which rows contain all NA values across the columns
 }}
 
 \examples{
