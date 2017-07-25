@@ -26,6 +26,7 @@ and at column position 1 or greater. (>0, >0) gives the literal index of the cel
 the searched name was found.
 }
 \examples{
+library(data.table)
 ## Create fake data
 ##
 DT <- rbindlist(

@@ -44,5 +44,6 @@ Helper functions to assist with basic data exploration tasks.
 }}
 
 \examples{
+library(data.table)
 easy_describe(as.data.table(iris))
 }

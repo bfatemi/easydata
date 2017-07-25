@@ -16,6 +16,7 @@
 #' @export
 #'
 #' @examples
+#' library(data.table)
 #' ## Create fake data
 #' ##
 #' DT <- rbindlist(
