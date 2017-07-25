@@ -31,7 +31,6 @@
 #' unexpected results (see details).
 #' 
 #' @import data.table
-#' @example inst/examples/ex-cleaning.R
 ClassMorph <- function(DT,
                        old   = c("factor","integer","character","numeric","logical", "Date"),
                        new   = c("factor","integer","character","numeric"),

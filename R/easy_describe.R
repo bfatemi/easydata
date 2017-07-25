@@ -65,6 +65,26 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     
 }
 
+#' @describeIn easy_describe A function to split the column names of a data.table into groups specified by class
+#' @export
+split_by_class <- function(DT){
+    cdt <- pcc(DT, bret = TRUE)
+    return(lapply(split(cdt, as.factor(cdt$Class)), function(i) i$CName))
+}
+
+#' @describeIn easy_describe Which columns contain all NA values down the rows (all obervations are NA)
+#' @export
+wcolNA <- function(DT){
+    which(apply(DT[, lapply(.SD, is.na)], 2, sum)==nrow(DT))
+}
+
+#' @describeIn easy_describe Which rows contain all NA values across the columns
+#' @export
+wrowNA <- function(DT){
+    which(apply(DT[, lapply(.SD, is.na)], 1, sum)==ncol(DT))
+}
+
+
 globalVariables(c("count_unique", "count_NA", "count_nonNA", "CName", "Class", "range_values", "pct_true", "pct_NA"))
 
 

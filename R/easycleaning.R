@@ -14,7 +14,6 @@
 #' @param b_skip A boolean indicating whether to skip non-numeric columns that \code{RoundCols} encounters
 #' @param b_copy A boolean indicating whether to make a copy of the data, or operate on by reference
 #' 
-#' @example inst/examples/ex-cleaning.R
 #' @name easycleaning
 NULL
 
@@ -58,7 +57,7 @@ ddup <- function(DT, cols=NULL, verbose=TRUE){
     }
     
     del <- nrow(DT) - nrow(cDT)
-    ninjar::printmsg(paste0("Removed ", del, " rows from total ", nrow(DT), " rows"))
+    print(paste0("Removed ", del, " rows from total ", nrow(DT), " rows"))
     return(cDT)
 }
 
@@ -139,7 +138,7 @@ p_setcolorder <- function(DT, cols=NULL, aslast=TRUE, verbose = FALSE){
     
     content <- paste0(1:length(colnames(DT)), ". ", colnames(DT), collapse = "\n")
     
-    if(verbose) ninjar::printmsg("New column order set", content = content)
+    if(verbose) print("New column order set", content = content)
 }
 
 

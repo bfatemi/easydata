@@ -15,7 +15,9 @@ Imports:
     pryr,
     stringr,
     utils,
-    stats
+    stats,
+    rlang,
+    lazyeval
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
@@ -26,5 +28,3 @@ Suggests:
     parallel
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-Remotes:
-    bfatemi/ninjar
