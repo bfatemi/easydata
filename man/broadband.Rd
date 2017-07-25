@@ -28,4 +28,3 @@ for Q3 2013 only. Note this data was scraped from the website of a leading
 provider of internet statistics and trends.
 }
 \keyword{datasets}
-

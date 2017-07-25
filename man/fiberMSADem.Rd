@@ -39,4 +39,3 @@ A dataset that contains GDP and demographic data (at the MSA level) from the BEA
 merged with Fiber internet adoption and access data from NTIA
 }
 \keyword{datasets}
-

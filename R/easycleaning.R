@@ -58,7 +58,7 @@ ddup <- function(DT, cols=NULL, verbose=TRUE){
     }
     
     del <- nrow(DT) - nrow(cDT)
-    fubar::PrintMessage(paste0("Removed ", del, " rows from total ", nrow(DT), " rows"))
+    ninjar::printmsg(paste0("Removed ", del, " rows from total ", nrow(DT), " rows"))
     return(cDT)
 }
 
@@ -139,7 +139,7 @@ p_setcolorder <- function(DT, cols=NULL, aslast=TRUE, verbose = FALSE){
     
     content <- paste0(1:length(colnames(DT)), ". ", colnames(DT), collapse = "\n")
     
-    if(verbose) fubar::PrintMessage("New column order set", content = content)
+    if(verbose) ninjar::printmsg("New column order set", content = content)
 }
 
 

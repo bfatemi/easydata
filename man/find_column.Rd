@@ -43,4 +43,3 @@ find_column("V3", DT) # (0, 3)
 ## Finds a name
 find_column("colA", DT)
 }
-

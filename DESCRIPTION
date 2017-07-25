@@ -8,9 +8,9 @@ Description: This package provides a set of functions built on top of
     data analyst who may not be familiar with R, and operations on data using
     data.tables.
 Depends:
-    R (>= 3.3.0),
-    data.table
+    R (>= 3.3.0)
 Imports:
+    data.table,
     lubridate,
     pryr,
     stringr,
@@ -23,9 +23,8 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    fubar,
     parallel
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Remotes:
-    bfatemi/fubar
+    bfatemi/ninjar

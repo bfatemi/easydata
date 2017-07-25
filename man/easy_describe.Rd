@@ -28,4 +28,3 @@ Helper functions to assist with basic data exploration tasks.
 \examples{
 easy_describe(as.data.table(iris))
 }
-

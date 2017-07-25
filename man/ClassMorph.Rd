@@ -67,6 +67,7 @@ DT, where a conversion to numeric would not generate NA values.
 
 \item \code{pcc}: prints (default) or returns a data.table describing column classes
 }}
+
 \examples{
 # Examples of: ClassMorph, pcc, CleanCols, CleanRows, easyswap, Booleanize
 
@@ -131,4 +132,3 @@ pcc(iris, "Class")              # print sorted by "Class"
 pcc(iris, "CName", bret = TRUE) # sort and return data.table
 
 }
-

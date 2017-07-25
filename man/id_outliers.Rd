@@ -22,4 +22,3 @@ A function that identifies outliers in a vector of numeric data
 #dt <- data.table(Values = vec, bOutlier = bout)
 #dt[bOutlier == TRUE]
 }
-
