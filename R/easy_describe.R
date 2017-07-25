@@ -14,6 +14,7 @@
 #' @export
 #'
 #' @examples
+#' library(data.table)
 #' easy_describe(as.data.table(iris))
 easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     
