@@ -25,36 +25,76 @@
 #' #bout <- id_outliers(vec)
 #' #dt <- data.table(Values = vec, bOutlier = bout)
 #' #dt[bOutlier == TRUE]
-id_outliers <- function(x = NULL, method = c("quantile", "prob"), p = .05){
-    method <- match.arg(method, c("quantile", "prob"))
+id_outliers <- function(x = NULL, 
+                        method = c("quantile", "prob", "logprob"), 
+                        p = .05, 
+                        tail = c("both", "left", "right")){
+    method <- match.arg(method, c("quantile", "prob", "logprob"))
     
-    if(is.null(x))
+    if( is.null(x) )
         stop("Input x is null", call. = FALSE)
-    if(!is.numeric(x)){
+    if( !is.numeric(x) ){
         warning("coercing x to class numeric", call. = FALSE)
         x <- suppressWarnings(as.numeric(x))
     }
+    if(length(x[!is.na(x)])==0)
+        stop("x has no non-NA values", call. = FALSE)
     
-    # x <- x[!is.na(x)]
-    
-    if(length(x)==0)
-        stop("length of x is 0", call. = FALSE)
-    
+    switch(
+        method,
+        
+        # interquantile range
+        quantile = {
+            q3 <- stats::quantile(x, .75)
+            q1 <- stats::quantile(x, .25)
+            lower <- q1 - 1.5*(q3 - q1)
+            upper <- q3 + 1.5*(q3 - q1)
+            
+            # tail is important because of the potential skew in distribution
+            res <- switch(
+                tail,
+                both = x < lower | x > upper,
+                left = x < lower,
+                right = x > upper
+            )
+            
+        },
+        
+        # probability density assuming normal distribution
+        prob = {
+            
+            prb <- pnorm(x, mean(x), sd(x), FALSE)
+            
+            # tail is important because of the potential skew in distribution
+            # - If increasing experience is on the x axis, then experts may be identified with 
+            #   tail = 'right'
+            # - If novices need to be identified, then we want the left part of the distribution 
+            #   however 
+            
+            res <- switch(
+                tail,
+                both = prb < p | prb > (1 - p),
+                left = prb > (1 - p),
+                right = prb < p
+            )
+            
+            
+            return()
+        },
+        
+        # probability density assuming LOG-normal distribution
+        logprob = {
+            res <- plnorm(x, mean(x), sd(x), FALSE)
+            return(res < p | res > 1-p)    
+        }
+    )
     
     if(method == "quantile"){
-        # interquantile range
-        q3 <- stats::quantile(x, .75)
-        q1 <- stats::quantile(x, .25)
         
-        lower <- q1 - 1.5*(q3 - q1)
-        upper <- q3 + 1.5*(q3 - q1)
-        
-        return(x < lower | x > upper)    
     }
     
     if(method == "prob"){
-        res <- round(pnorm(x, mean(x), sd(x), FALSE), digits = 5)
-        return(res < p | res > 1-p)
+        
     }
     
     stop("Incorrect method specified. Should be one of: prob, quantile")
