@@ -4,7 +4,8 @@
 \alias{id_outliers}
 \title{A function that identifies outliers in a vector of numeric data}
 \usage{
-id_outliers(x = NULL, method = c("quantile", "prob"), p = 0.05)
+id_outliers(x = NULL, method = c("quantile", "prob", "logprob"), p = 0.05,
+  tail = c("both", "left", "right"))
 }
 \arguments{
 \item{x}{A vector that is of class numeric, or coercible to one}
@@ -13,6 +14,8 @@ id_outliers(x = NULL, method = c("quantile", "prob"), p = 0.05)
 
 \item{p}{If method "prob" is selected, this parameter defines the probability threshold for 
 outlier classification}
+
+\item{tail}{[DOC NEEDED]}
 }
 \value{
 A logical vector where TRUE identifies the position of an outlier in the input argument

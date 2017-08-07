@@ -3,16 +3,17 @@
 #' Helper functions to assist with basic data exploration tasks.
 #' 
 #' @param DT A data.table  
-# @param all Boolean indicating whether to perform for all columns (default is FALSE). If
-#      this is false and optional argument "cols" was also not provided, the default behavior
-#      is to perform this for only factor and character column classes in DT
+#' @param all Boolean indicating whether to perform for all columns (default is FALSE). If
+#'      this is false and optional argument "cols" was also not provided, the default behavior
+#'      is to perform this for only factor and character column classes in DT
 #' @param cols optional arg providing column names to operate on
 #' @param cclass Not implemented. Useful if desiring to describe all columns of a particular class
 #' @param FUN NI; provide function to apply over cols (if provided)
 #'
 #' @return A descriptive data.table
 #' 
-#' @importFrom lubridate
+#' @importFrom lubridate is.Date is.POSIXct
+#' 
 #' @export
 #'
 #' @examples
@@ -26,26 +27,28 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
     if(!is.data.table(DT)) stop("DT should be data.table class")
     
     
-    # cols <- ccdt[, CName]        # get colnames of DT to describe
-    # ccdt[, count_nonNA  := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
-    # ccdt[, count_NA     := nrow(DT) - count_nonNA ]
+
     
     cc <- pcc(DT, bret = TRUE) # start the descriptive table
     cc[, pct_NA   := vapply(CName, function(i) DT[is.na(get(i)), .N / DT[, .N]], FUN.VALUE = numeric(1)) ]
     cc[, pct_Uniq := vapply(CName, function(i) length(unique(DT[, get(i)])) / DT[, .N], FUN.VALUE = numeric(1))]
     cc[, pct_true := NA_real_]
     
+    cols <- cc[, CName]        # get colnames of DT to describe
+    cc[, count_nonNA  := sapply(cols, function(i) sum(DT[, !is.na(get(i))]))]
+    cc[, count_NA     := nrow(DT) - count_nonNA ]
+    cc[, count_unique := vapply(CName, function(i) length(unique(DT[, get(i)])), FUN.VALUE = numeric(1)) ]
+    
     ##
     ## date range of date class columns
     ##
-    isDate <- function(i) is.Date(i) | is.POSIXct(i)
+    isDate <- function(i) lubridate::is.Date(i) | is.POSIXct(i)
     isNum  <- function(i) is.double(i) | is.numeric(i) | is.integer(i)
     isBool <- function(i) is.logical(i)
     
     index  <- which(as.logical(sapply(DT, function(i) isDate(i) | isNum(i))))
     cnames <- cc[index, CName]
     
-    range(c(TRUE, TRUE, TRUE, FALSE))
     f <- function(mn, mx) paste0("(", mn, "):(", mx, ")")
     for(col in cnames)
         cc[CName == col, range_vals := do.call(f, as.list(range(DT[, get(col)], na.rm = TRUE)))]
@@ -58,12 +61,12 @@ easy_describe <- function(DT, cols=NULL, cclass = NULL, FUN = NULL, all=NULL){
         }
     }
     
-    cc[count_NA > 0, pct_NA := round(count_NA/nrow(DT), 5)]
+    # cc[count_NA > 0, pct_NA := round(count_NA/nrow(DT), 5)]
     
     setnames(cc, c("Pos", "CName", "Class"), c("col_position", "col_name", "col_class"))
-    setcolorder(cc, c("col_position", "col_name", "col_class", "count_unique", 
-                        "count_NA", "count_nonNA", "range_values", 
-                        "pct_true", "pct_NA"))
+    # setcolorder(cc, c("col_position", "col_name", "col_class", "count_unique", "pct_Uniq", 
+    #                     "count_NA", "count_nonNA", "range_values", "range_vals",
+    #                     "pct_true", "pct_NA"))
     setorderv(cc, c("col_class", "count_unique", "col_position"))
     return(cc[])
     

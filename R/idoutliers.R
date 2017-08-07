@@ -16,6 +16,7 @@
 #' @param method The method to use in order to identify outliers. This should be one of "quantile" or "prob"
 #' @param p If method "prob" is selected, this parameter defines the probability threshold for 
 #' outlier classification
+#' @param tail [DOC NEEDED]
 #' 
 #' @return A logical vector where TRUE identifies the position of an outlier in the input argument
 #' 

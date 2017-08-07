@@ -20,12 +20,12 @@ wrowNA(DT)
 
 \item{cols}{optional arg providing column names to operate on}
 
-\item{cclass}{Not implemented. Useful if desiring to describe all columns a particular class}
+\item{cclass}{Not implemented. Useful if desiring to describe all columns of a particular class}
 
 \item{FUN}{NI; provide function to apply over cols (if provided)}
 
-\item{all}{Boolean indicating whether to perform for all columns (default is FALSE). If 
-this is false and optional argument "cols" was also not provided, the default behavior 
+\item{all}{Boolean indicating whether to perform for all columns (default is FALSE). If
+this is false and optional argument "cols" was also not provided, the default behavior
 is to perform this for only factor and character column classes in DT}
 }
 \value{
@@ -45,5 +45,8 @@ Helper functions to assist with basic data exploration tasks.
 
 \examples{
 library(data.table)
-easy_describe(as.data.table(iris))
+library(easydata)
+DT <- as.data.table(iris)
+
+easy_describe(DT)
 }
