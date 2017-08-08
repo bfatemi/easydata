@@ -18,7 +18,8 @@ Imports:
     stats,
     rlang,
     lazyeval,
-    stringi
+    stringi,
+    magrittr
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
