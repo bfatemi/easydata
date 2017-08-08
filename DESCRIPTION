@@ -17,7 +17,8 @@ Imports:
     utils,
     stats,
     rlang,
-    lazyeval
+    lazyeval,
+    stringi
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
