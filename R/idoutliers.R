@@ -52,7 +52,7 @@ id_outliers <- function(x = NULL,
             upper <- q3 + 1.5*(q3 - q1)
             
             # tail is important because of the potential skew in distribution
-            res <- switch(
+            switch(
                 tail,
                 both = x < lower | x > upper,
                 left = x < lower,
@@ -72,15 +72,11 @@ id_outliers <- function(x = NULL,
             # - If novices need to be identified, then we want the left part of the distribution 
             #   however 
             
-            res <- switch(
-                tail,
-                both = prb < p | prb > (1 - p),
-                left = prb > (1 - p),
-                right = prb < p
+            switch(tail,
+                   both = prb < p | prb > (1 - p),
+                   left = prb > (1 - p),
+                   right = prb < p
             )
-            
-            
-            return()
         },
         
         # probability density assuming LOG-normal distribution
@@ -89,14 +85,6 @@ id_outliers <- function(x = NULL,
             return(res < p | res > 1-p)    
         }
     )
-    
-    if(method == "quantile"){
-        
-    }
-    
-    if(method == "prob"){
-        
-    }
     
     stop("Incorrect method specified. Should be one of: prob, quantile")
 }
